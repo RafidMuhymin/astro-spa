@@ -1,0 +1,6 @@
+---
+import fs from "node:fs"
+const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
+---
+
+{`<script>${spa}</script>`}
