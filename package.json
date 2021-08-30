@@ -8,5 +8,8 @@
   "license": "MIT",
   "keywords": [
     "astro-component"
-  ]
+  ],
+  "scripts": {
+    "test": "echo \"No test specified\""
+  }
 }
