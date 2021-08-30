@@ -44,12 +44,13 @@ And that's it, you're now ready to go!
 
 ## Demos
 
-[https://astro-spafy-component-demo.netlify.app/]
-[https://ohka-bots-site-astro-ksoqn4flk7-j2q7uvclm-tc-001.vercel.app/] (Thanks to @Tc-001)
+https://astro-spafy-component-demo.netlify.app/
+
+https://ohka-bots-site-astro-ksoqn4flk7-j2q7uvclm-tc-001.vercel.app/ (Thanks to @Tc-001)
 
 ## Upcoming Features
 
 - [ ] Configuration Options
 - [ ] A new SPA component that utilizes the new AppHistory API (currently only available in Chrome Canary build)
-- [ ] Containirization (Opt-in)
+- [ ] Containerization (Opt-in)
 - [ ] You tell me? Create an issue with your wishes
