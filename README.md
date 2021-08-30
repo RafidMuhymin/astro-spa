@@ -10,13 +10,15 @@ The complete list of features:
 2. It upgrades from prefetch to fetch on mouseover and touchstart if the resource hasn't been prefetched already
 3. It caches the prefetched resources using the Cache API
 4. It intercepts when you click on an internal link and then it tries to serve the request from cache, if a cache isn't found, it fetches the requested page and replace the current documentElement with the new documentElement
-5. Then it executes the scripts of the navigated page
-6. It shows a fade-in animation when the new page loads
-7. It dispatches a prefetch function and navigate function that can be used for prefetching and navigating programmatically
-8. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
-9. It also works with popstate events (back/forward navigation)
-10. It clears the entire cache on page load/reloads to ensure there's no stale content
-11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
+5. It shows a progress bar similar to nprogress
+6. The progress bar delays new page load by 100ms to show a 100% completion transition
+7. Then it executes the scripts of the navigated page
+8. It shows a fade-in animation when the new page loads
+9. It dispatches a prefetch function and navigate function that can be used for prefetching and navigating programmatically
+10. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
+11. It also works with popstate events (back/forward navigation)
+12. It clears the entire cache on page load/reloads to ensure there's no stale content
+13. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
 
 ## Installing the plugin
 
@@ -41,6 +43,46 @@ import { Spa } from 'astro-spa'
 ```
 
 And that's it, you're now ready to go!
+
+## APIs
+
+### prefetch
+
+You can use the prefetch function to prefetch links programmatically.
+
+```js
+const url = "https://example.com";
+prefetch(url);
+```
+
+### navigate
+
+You can use the navigate function to to trigger in-app navigation programmatically.
+
+```js
+const searchQuery = "query";
+navigate(`/search?${query}`);
+```
+
+### w.onNavigate
+
+You can use the global onNavigate lifecycle function to execute code when the user clicks on an internal link
+
+```js
+w.onNavigate(() => {
+  console.log("navigated");
+});
+```
+
+### w.onMount
+
+You can use the global onRender lifecycle function to execute code when the navigated pages has completed loading and executed the scripts. It's an alternative to the DOMContentLoaded or window.load event.
+
+```js
+w.onNavigate(() => {
+  console.log("mounted");
+});
+```
 
 ## Demos
 
