@@ -6,6 +6,15 @@
       const cache = await caches.open("spafy");
       let prefetchTimeoutIDArray = [];
 
+      const searchInternalLinks = () =>
+        Array.from(d.links).filter(
+          (link) =>
+            link.host === l.host &&
+            !link.hash &&
+            !link.hasAttribute("download") &&
+            link.target !== "_blank"
+        );
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry, i) => {
@@ -19,39 +28,36 @@
         { threshold: 0.25 }
       );
 
-      Array.from(d.links)
-        .filter(
-          (link) =>
-            link.host === l.host &&
-            !link.hash &&
-            !link.hasAttribute("download") &&
-            link.target !== "_blank"
-        )
-        .forEach(async (anchor) => {
-          const { href } = anchor;
-          anchor.addEventListener("click", (e) => {
-            if (!e.ctrlKey) {
-              e.preventDefault();
-              navigate(href);
-            }
-          });
-
-          const detectDataSaverAndCache = async () => {
-            return (
-              (navigator.connection && navigator.connection.saveData) ||
-              (await cache.match(href))
-            );
-          };
-
-          (await detectDataSaverAndCache()) || observer.observe(anchor);
-
-          const callback = async () => {
-            (await detectDataSaverAndCache()) ||
-              cache.put(href, await fetch(href));
-          };
-          anchor.onmouseover = callback;
-          anchor.ontouchstart = callback;
+      const observeLink = async (anchor) => {
+        const { href } = anchor;
+        anchor.addEventListener("click", (e) => {
+          if (!e.ctrlKey) {
+            e.preventDefault();
+            navigate(href);
+          }
         });
+
+        const detectDataSaverAndCache = async () => {
+          return (
+            (navigator.connection && navigator.connection.saveData) ||
+            (await cache.match(href))
+          );
+        };
+
+        (await detectDataSaverAndCache()) || observer.observe(anchor);
+
+        const callback = async () => {
+          (await detectDataSaverAndCache()) ||
+            cache.put(href, await fetch(href));
+        };
+        anchor.onmouseover = callback;
+        anchor.ontouchstart = callback;
+      };
+
+      const internalLinks = searchInternalLinks();
+      internalLinks.forEach((link) => {
+        observeLink(link);
+      });
 
       const constructPage = async () => {
         w.onNavigate && onNavigate();
@@ -98,13 +104,23 @@
           };
       };
 
-      w.onpopstate ||= constructPage;
+      w.onpopstate = constructPage;
 
       w.navigate = (href) => {
         if (l.href !== href && l.pathname !== href) {
           history.pushState({}, d.title, href);
           constructPage();
         }
+      };
+
+      w.scan = () => {
+        const newLinks = searchInternalLinks().filter(
+          (link) => !internalLinks.includes(link)
+        );
+        newLinks &&
+          newLinks.forEach((link) => {
+            observeLink(link);
+          });
       };
 
       w.prefetch = async (href) => {
