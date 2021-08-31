@@ -14,11 +14,12 @@ The complete list of features:
 6. The progress bar delays new page load by 100ms to show a 100% completion transition
 7. Then it executes the scripts of the navigated page
 8. It shows a fade-in animation when the new page loads
-9. It dispatches a prefetch function and navigate function that can be used for prefetching and navigating programmatically
-10. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
-11. It also works with popstate events (back/forward navigation)
-12. It clears the entire cache on page load/reloads to ensure there's no stale content
-13. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
+9. It also works with popstate events (back/forward navigation)
+10. It clears the entire cache on page load/reloads to ensure there's no stale content
+11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
+12. It dispatches a prefetch function and navigate function that can be used for prefetching and navigating programmatically
+13. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
+14. It provides a helper function, scan()! It can be used for detecting new links and observe them.
 
 ## Installing the plugin
 
@@ -57,7 +58,7 @@ prefetch(url);
 
 ### navigate
 
-You can use the navigate function to to trigger in-app navigation programmatically.
+You can use the navigate function to trigger in-app navigation programmatically.
 
 ```js
 const searchQuery = "query";
@@ -82,6 +83,18 @@ You can use the global onRender lifecycle function to execute code when the navi
 w.onMount = () => {
   console.log("mounted");
 };
+```
+
+### scan
+
+You can use the scan helper function to observe new links injected later into the document via JS.
+
+```js
+const links = ["a link", "another link", "a third link"];
+links.forEach((link) => {
+  document.body.appendChild(link);
+});
+scan(); // It will start observing the new three links
 ```
 
 ## Demos
