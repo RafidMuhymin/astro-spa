@@ -28,7 +28,7 @@ Once you setup your Astro project simply run the following command:
 # yarn
 yarn add astro-spa
 
-#npm
+# npm
 npm i astro-spa
 ```
 
@@ -69,9 +69,9 @@ navigate(`/search?${query}`);
 You can use the global onNavigate lifecycle function to execute code when the user clicks on an internal link
 
 ```js
-w.onNavigate(() => {
+w.onNavigate = () => {
   console.log("navigated");
-});
+};
 ```
 
 ### w.onMount
@@ -79,9 +79,9 @@ w.onNavigate(() => {
 You can use the global onRender lifecycle function to execute code when the navigated pages has completed loading and executed the scripts. It's an alternative to the DOMContentLoaded or window.load event.
 
 ```js
-w.onNavigate(() => {
+w.onMount = () => {
   console.log("mounted");
-});
+};
 ```
 
 ## Demos
