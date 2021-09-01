@@ -24,8 +24,7 @@ const {
   delay = 500,
 } = Astro.props;
 
-const scriptContent = `
-((w, d, l) => {
+const scriptContent = `((w, d, l) => {
   requestIdleCallback(
     async () => {
       w.cs || caches.delete("spafy");
@@ -169,12 +168,11 @@ const scriptContent = `
     },
     { timeout: ${timeout} }
   );
-})(this, document, location);
-`;
+})(this, document, location);`;
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
-const script = `<script${external && ` src="node_modules/astro-spa/spa.js"`}>${
-  external || scriptContent
+const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : null}>${
+  !external ? scriptContent : null
 }</script>`;
 // const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
 ---
