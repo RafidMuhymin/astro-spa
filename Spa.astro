@@ -16,12 +16,12 @@ import fs from "node:fs"
     limit,
     origins,
     external,
-    threshold,
+    threshold = 0.25,
     ignores,
     isHighPriority,
     rootElement,
-    timeout,
-    delay,
+    timeout = 2000,
+    delay = 500,
   } = Astro.props;
 
 // const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
@@ -42,11 +42,11 @@ import fs from "node:fs"
             entry.isIntersecting
               ? (prefetchTimeoutIDArray[i] = setTimeout(() => {
                   prefetch(entry.target.href);
-                }, 500))
+                }, ${delay}))
               : clearTimeout(prefetchTimeoutIDArray[i]);
           });
         },
-        { threshold: 0.25 }
+        { threshold: ${threshold} }
       );
 
       Array.from(d.links)
@@ -152,7 +152,7 @@ import fs from "node:fs"
         }
       };
     },
-    { timeout: 2000 }
+    { timeout: ${timeout} }
   );
 })(this, document, location);
 </script>`}
