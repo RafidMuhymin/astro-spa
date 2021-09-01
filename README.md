@@ -17,7 +17,7 @@ The complete list of features:
 9. It also works with popstate events (back/forward navigation)
 10. It clears the entire cache on page load/reloads to ensure there's no stale content
 11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
-12. It dispatches a prefetch function and navigate function that can be used for prefetching and navigating programmatically
+12. It dispatches three functions, prefetch, navigate and observe, that can be called for prefetching, navigating and observing an anchor element programmatically
 13. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
 14. It provides a helper function, scan()! It can be used for detecting new links and observe them.
 
@@ -65,6 +65,27 @@ const searchQuery = "query";
 navigate(`/search?${query}`);
 ```
 
+### observe
+
+You can use the observe function to start observing a new link programmatically. It'll prefetch and add proper event handlers to the link.
+
+```js
+const link = document.querySelector("#new-link");
+observe(link); // It will start observing the new link
+```
+
+### scan
+
+You can use the scan helper function to start observing all the new links injected later into the document via JS like observe function.
+
+```js
+const links = ["a link", "another link", "a third link"];
+links.forEach((link) => {
+  document.body.appendChild(link);
+});
+scan(); // It will start observing the new three links
+```
+
 ### w.onNavigate
 
 You can use the global onNavigate lifecycle function to execute code when the user clicks on an internal link
@@ -83,18 +104,6 @@ You can use the global onRender lifecycle function to execute code when the navi
 w.onMount = () => {
   console.log("mounted");
 };
-```
-
-### scan
-
-You can use the scan helper function to observe new links injected later into the document via JS.
-
-```js
-const links = ["a link", "another link", "a third link"];
-links.forEach((link) => {
-  document.body.appendChild(link);
-});
-scan(); // It will start observing the new three links
 ```
 
 ## Demos
