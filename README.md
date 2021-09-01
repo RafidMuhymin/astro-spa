@@ -80,6 +80,7 @@ You can use the scan helper function to start observing all the new links inject
 
 ```js
 const links = ["a link", "another link", "a third link"];
+
 links.forEach((link) => {
   document.body.appendChild(link);
 });
