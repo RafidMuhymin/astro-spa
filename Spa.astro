@@ -1,33 +1,30 @@
 ---
-import fs from "node:fs"
-  export interface props {
-    limit: number;
-    origins: string[];
-    external: boolean;
-    threshold: number;
-    ignores: string[];
-    isHighPriority: boolean;
-    rootElement: HTMLElement;
-    timeout: number;
-    delay: number;
-  }
+import fs from "node:fs";
+export interface props {
+  limit: number;
+  origins: string[];
+  external: boolean;
+  threshold: number;
+  ignores: string[];
+  isHighPriority: boolean;
+  rootElement: HTMLElement;
+  timeout: number;
+  delay: number;
+}
 
-  const {
-    limit,
-    origins,
-    external,
-    threshold = 0.25,
-    ignores,
-    isHighPriority,
-    rootElement,
-    timeout = 2000,
-    delay = 500,
-  } = Astro.props;
+const {
+  limit,
+  origins,
+  external = false,
+  threshold = 0.25,
+  ignores,
+  isHighPriority,
+  rootElement,
+  timeout = 2000,
+  delay = 500,
+} = Astro.props;
 
-// const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
----
-
-{`<script>
+const scriptContent = `
 ((w, d, l) => {
   requestIdleCallback(
     async () => {
@@ -35,6 +32,15 @@ import fs from "node:fs"
       w.cs = true;
       const cache = await caches.open("spafy");
       let prefetchTimeoutIDArray = [];
+
+      const searchInternalLinks = () =>
+        Array.from(d.links).filter(
+          (link) =>
+            link.host === l.host &&
+            !link.hash &&
+            !link.hasAttribute("download") &&
+            link.target !== "_blank"
+        );
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -49,39 +55,12 @@ import fs from "node:fs"
         { threshold: ${threshold} }
       );
 
-      Array.from(d.links)
-        .filter(
-          (link) =>
-            link.host === l.host &&
-            !link.hash &&
-            !link.hasAttribute("download") &&
-            link.target !== "_blank"
-        )
-        .forEach(async (anchor) => {
-          const { href } = anchor;
-          anchor.addEventListener("click", (e) => {
-            if (!e.ctrlKey) {
-              e.preventDefault();
-              navigate(href);
-            }
-          });
+      
 
-          const detectDataSaverAndCache = async () => {
-            return (
-              (navigator.connection && navigator.connection.saveData) ||
-              (await cache.match(href))
-            );
-          };
-
-          (await detectDataSaverAndCache()) || observer.observe(anchor);
-
-          const callback = async () => {
-            (await detectDataSaverAndCache()) ||
-              cache.put(href, await fetch(href));
-          };
-          anchor.onmouseover = callback;
-          anchor.ontouchstart = callback;
-        });
+      const internalLinks = searchInternalLinks();
+      internalLinks.forEach((link) => {
+        observe(link);
+      });
 
       const constructPage = async () => {
         w.onNavigate && onNavigate();
@@ -128,13 +107,23 @@ import fs from "node:fs"
           };
       };
 
-      w.onpopstate ||= constructPage;
+      w.onpopstate = constructPage;
 
       w.navigate = (href) => {
         if (l.href !== href && l.pathname !== href) {
           history.pushState({}, d.title, href);
           constructPage();
         }
+      };
+
+      w.scan = () => {
+        const newLinks = searchInternalLinks().filter(
+          (link) => !internalLinks.includes(link)
+        );
+        newLinks &&
+          newLinks.forEach((link) => {
+            observe(link);
+          });
       };
 
       w.prefetch = async (href) => {
@@ -151,8 +140,43 @@ import fs from "node:fs"
           d.head.appendChild(link);
         }
       };
+
+      w.observe = async (anchor) => {
+        const { href } = anchor;
+        anchor.addEventListener("click", (e) => {
+          if (!e.ctrlKey) {
+            e.preventDefault();
+            navigate(href);
+          }
+        });
+
+        const detectDataSaverAndCache = async () => {
+          return (
+            (navigator.connection && navigator.connection.saveData) ||
+            (await cache.match(href))
+          );
+        };
+
+        (await detectDataSaverAndCache()) || observer.observe(anchor);
+
+        const callback = async () => {
+          (await detectDataSaverAndCache()) ||
+            cache.put(href, await fetch(href));
+        };
+        anchor.onmouseover = callback;
+        anchor.ontouchstart = callback;
+      };
     },
     { timeout: ${timeout} }
   );
 })(this, document, location);
-</script>`}
+`;
+
+fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
+const script = `<script${external && ` src="node_modules/astro-spa/spa.js"`}>${
+  external || scriptContent
+}</script>`;
+// const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
+---
+
+{script}
