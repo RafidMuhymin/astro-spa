@@ -43,9 +43,9 @@ const scriptContent = buildScript(
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
 
-const script = `<script${
-  external ? ` src="node_modules/astro-spa/spa.js"` : ""
-}>${external ? "" : scriptContent}</script>`;
+const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : ""}>${
+  external ? "" : scriptContent
+}</script>`;
 ---
 
 {script}
