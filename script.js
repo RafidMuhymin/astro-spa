@@ -30,15 +30,7 @@ export default function (
               : clearTimeout(prefetchTimeoutIDArray[i]);
           });
         },
-        {${
-          root && rootMargin
-            ? `root: ${root}, rootMargin: ${rootMargin},`
-            : root
-            ? `root: ${root},`
-            : rootMargin
-            ? `rootMargin: ${rootMargin},`
-            : ""
-        } threshold: ${threshold} }
+        { threshold: ${threshold} }
       );
 
       const constructPage = async () => {
