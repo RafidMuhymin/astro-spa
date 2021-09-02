@@ -171,8 +171,8 @@ const scriptContent = `((w, d, l) => {
 })(this, document, location);`;
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
-const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : null}>${
-  !external ? scriptContent : null
+const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : ""}>${
+  external ? "" : scriptContent
 }</script>`;
 // const spa = fs.readFileSync("node_modules/astro-spa/spa.js")
 ---
