@@ -10,7 +10,7 @@ export default function (
   timeout,
   delay
 ) {
-  return `((w, d, l) => {
+  const scriptContent = `((w, d, l) => {
   requestIdleCallback(
     async () => {
       w.cs || caches.delete("spafy");
@@ -160,4 +160,6 @@ export default function (
     { timeout: ${timeout} }
   );
 })(this, document, location);`;
+
+  return scriptContent;
 }
