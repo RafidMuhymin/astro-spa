@@ -1,15 +1,4 @@
-export default function (
-  limit,
-  origins,
-  external,
-  ignores,
-  isHighPriority,
-  root,
-  rootMargin,
-  threshold,
-  timeout,
-  delay
-) {
+export default function (delay, threshold, timeout) {
   const scriptContent = `((w, d, l) => {
   requestIdleCallback(
     async () => {
