@@ -29,13 +29,6 @@ export default function (delay, threshold, timeout) {
               { threshold: ${threshold} }
             );
       
-            
-      
-            const internalLinks = searchInternalLinks();
-            internalLinks.forEach((link) => {
-              observe(link);
-            });
-      
             const constructPage = async () => {
               w.onNavigate && onNavigate();
       
@@ -140,6 +133,11 @@ export default function (delay, threshold, timeout) {
               anchor.onmouseover = callback;
               anchor.ontouchstart = callback;
             };
+            
+            const internalLinks = searchInternalLinks();
+            internalLinks.forEach((link) => {
+              observe(link);
+            });
           },
           { timeout: ${timeout} }
         );
