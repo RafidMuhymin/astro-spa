@@ -6,10 +6,11 @@ export interface props {
   limit: number;
   origins: string[];
   external: boolean;
-  threshold: number;
   ignores: string[];
   isHighPriority: boolean;
-  rootElement: HTMLElement;
+  root: string;
+  rootMargin: string;
+  threshold: number;
   timeout: number;
   delay: number;
 }
@@ -18,21 +19,33 @@ const {
   limit,
   origins,
   external = false,
-  threshold = 0.25,
   ignores,
-  isHighPriority,
-  rootElement,
+  isHighPriority = false,
+  root = null,
+  rootMargin = null;
+  threshold = 0.25,
   timeout = 2000,
   delay = 500,
 } = Astro.props;
 
-const scriptContent = buildScript(delay, threshold, timeout);
+const scriptContent = buildScript(
+  limit,
+  origins,
+  external,
+  ignores,
+  isHighPriority,
+  root,
+  rootMargin,
+  threshold,
+  timeout,
+  delay
+);
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
 
-const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : ""}>${
-  external ? "" : scriptContent
-}</script>`;
+const script = `<script${
+  external ? ` src="node_modules/astro-spa/spa.js"` : ""
+}>${external ? "" : scriptContent}</script>`;
 ---
 
 {script}
