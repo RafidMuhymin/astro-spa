@@ -1,8 +1,10 @@
 ---
 import fs from "node:fs";
+import { minify } from "terser";
 import buildScript from "./script.js";
 
 export interface props {
+  beautify: boolean;
   limit: number;
   external: boolean;
   ignores: string[];
@@ -15,6 +17,7 @@ export interface props {
 }
 
 const {
+  beautify = false,
   limit,
   external = false,
   ignores,
@@ -37,11 +40,13 @@ const scriptContent = buildScript(
   delay
 );
 
+script = minify(scriptContent, { format : { beautify } });
+
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
 
-const script = `<script${
+const scriptTag = `<script${
   external ? ` src="node_modules/astro-spa/spa.js"` : ""
 }>${external ? "" : scriptContent}</script>`;
 ---
 
-{script}
+{scriptTag}
