@@ -8,7 +8,7 @@ import observe from "./observe";
 export default function (
   limit,
   ignores,
-  isHighPriority,
+  highPriorityPrefetch,
   root,
   rootMargin,
   threshold,
@@ -25,9 +25,21 @@ export default function (
       let prefetchTimeoutIDArray = [];
       let internalLinks = [];
 
+      const detectDataSaverAndCache = async (href) => {
+        return (
+          (navigator.connection && navigator.connection.saveData) ||
+          (await cache.match(href))
+        );
+      };
+
       ${observer(delay, root, rootMargin, threshold) + constructPage()}
       w.onpopstate = constructPage;
-      ${navigate() + prefetch() + scan() + observe()}
+      ${
+        navigate() +
+        prefetch(highPriorityPrefetch) +
+        scan(limit, ignores) +
+        observe()
+      }
       scan();
     },
     { timeout: ${timeout} }

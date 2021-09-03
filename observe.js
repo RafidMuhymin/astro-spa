@@ -8,18 +8,12 @@ export default function () {
       }
     });
   
-    const detectDataSaverAndCache = async () => {
-      return (
-        (navigator.connection && navigator.connection.saveData) ||
-        (await cache.match(href))
-      );
-    };
-  
-    (await detectDataSaverAndCache()) || observer.observe(anchor);
-  
+    (await detectDataSaverAndCache(href)) || observer.observe(anchor);
+
     const callback = async () => {
-      (await detectDataSaverAndCache()) || cache.put(href, await fetch(href));
+      (await detectDataSaverAndCache(href)) || cache.put(href, await fetch(href));
     };
+
     anchor.onmouseover = callback;
     anchor.ontouchstart = callback;
   };`;
