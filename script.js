@@ -7,8 +7,6 @@ import observe from "./observe";
 
 export default function (
   limit,
-  origins,
-  external,
   ignores,
   isHighPriority,
   root,

@@ -4,7 +4,6 @@ import buildScript from "./script.js";
 
 export interface props {
   limit: number;
-  origins: string[];
   external: boolean;
   ignores: string[];
   isHighPriority: boolean;
@@ -17,12 +16,11 @@ export interface props {
 
 const {
   limit,
-  origins,
   external = false,
   ignores,
-  isHighPriority = false,
-  root = null,
-  rootMargin = null;
+  isHighPriority,
+  root,
+  rootMargin,
   threshold = 0.25,
   timeout = 2000,
   delay = 500,
@@ -30,8 +28,6 @@ const {
 
 const scriptContent = buildScript(
   limit,
-  origins,
-  external,
   ignores,
   isHighPriority,
   root,
@@ -43,9 +39,9 @@ const scriptContent = buildScript(
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", scriptContent);
 
-const script = `<script${external ? ` src="node_modules/astro-spa/spa.js"` : ""}>${
-  external ? "" : scriptContent
-}</script>`;
+const script = `<script${
+  external ? ` src="node_modules/astro-spa/spa.js"` : ""
+}>${external ? "" : scriptContent}</script>`;
 ---
 
 {script}
