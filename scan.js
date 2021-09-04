@@ -7,7 +7,7 @@ export default function (limit, ignores) {
         !link.hasAttribute("download") &&
         !link.hasAttribute("data-spa-ignore") &&
         link.target !== "_blank" ${
-          ignores
+          ignores.length > 0
             ? "&& ignores.includes(link.href) && ignores.includes(link.pathname)"
             : ""
         }

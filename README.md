@@ -107,6 +107,60 @@ w.onMount = () => {
 };
 ```
 
+## Configuration Options (Component Props)
+
+### beautify
+Type: `boolean`
+Default: `false`
+
+### cache
+Type: `boolean`
+Default: `true`
+
+### delay
+Type: `number`
+Default: `500`
+
+### external
+Type: `boolean`
+Default: `false`
+
+### highPriorityPrefetch
+Type: `boolean`
+Default: `false`
+
+### ignores
+Type: `array of strings`
+Default: `undefined`
+
+### limit
+Type: `number`
+Default: `undefined`
+
+### prefetch
+Type: `boolean`
+Default: `true`
+
+### prefetchUpgradation
+Type: `boolean`
+Default: `true`
+
+### root
+Type: `string`
+Default: `undefined`
+
+### rootMargin
+Type: `string`
+Default: `undefined`
+
+### threshold
+Type: `number`
+Default: `0.25`
+
+### timeout
+Type: `number`
+Default: `2000`
+
 ## Demos
 
 https://astro-spafy-component-demo.netlify.app/
