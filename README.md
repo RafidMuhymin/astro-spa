@@ -121,25 +121,35 @@ Whether or not the code the should be beautified. If true then the code will bea
 Type: `boolean`
 Default: `true`
 
+Whether or not Cache API will be used for caching the fetched and prefetched resources.
+
 ### delay
 
 Type: `number`
 Default: `500`
+
+The amount of time each link needs to stay inside the viewport before being prefetched, in milliseconds.
 
 ### external
 
 Type: `boolean`
 Default: `false`
 
+Whether the code should be included in an external JavaScript file or be inlined.
+
 ### highPriorityPrefetch
 
 Type: `boolean`
 Default: `false`
 
+Whether or not the internal links will be prefetched with a higher priority.
+
 ### ignores
 
 Type: `array of strings`
 Default: `undefined`
+
+The urls that should not be fetched or prefetched. However, they won't be excluded from SPA navigation.
 
 ### limit
 

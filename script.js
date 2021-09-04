@@ -6,17 +6,17 @@ import scan from "./scan";
 import observe from "./observe";
 
 export default function (
-  limit,
-  ignores,
+  cache,
+  delay,
   highPriorityPrefetch,
+  ignores,
+  limit,
   prefetch,
   prefetchUpgradation,
-  cache,
   root,
   rootMargin,
   threshold,
-  timeout,
-  delay
+  timeout
 ) {
   return `((w, d, l) => {
   requestIdleCallback(

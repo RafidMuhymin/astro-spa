@@ -3,21 +3,21 @@ import fs from "node:fs";
 import { minify } from "terser";
 import buildScript from "./script.js";
 
-// export interface props {
-//   beautify: boolean;
-//   cache: boolean;
-//   delay: number;
-//   external: boolean;
-//   highPriorityPrefetch: boolean;
-//   ignores: string[];
-//   limit: number;
-//   prefetch: boolean;
-//   prefetchUpgradation: boolean;
-//   root: string;
-//   rootMargin: string;
-//   threshold: number;
-//   timeout: number;
-// }
+export interface props {
+  beautify: boolean;
+  cache: boolean;
+  delay: number;
+  external: boolean;
+  highPriorityPrefetch: boolean;
+  ignores: string[];
+  limit: number;
+  prefetch: boolean;
+  prefetchUpgradation: boolean;
+  root: string;
+  rootMargin: string;
+  threshold: number;
+  timeout: number;
+}
 
 const {
   beautify = false,
