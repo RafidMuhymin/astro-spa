@@ -5,51 +5,52 @@ import buildScript from "./script.js";
 
 export interface props {
   beautify: boolean;
-  limit: number;
+  cache: boolean;
+  delay: number;
   external: boolean;
-  ignores: string[];
   highPriorityPrefetch: boolean;
+  ignores: string[];
+  limit: number;
   prefetch: boolean;
   prefetchUpgradation: boolean;
-  cache: boolean;
   root: string;
   rootMargin: string;
   threshold: number;
   timeout: number;
-  delay: number;
 }
 
 const {
   beautify = false,
-  limit,
+  cache = true,
+  delay = 500,
   external = false,
-  ignores,
   highPriorityPrefetch = false,
+  ignores,
+  limit,
   prefetch = true,
   prefetchUpgradation = true,
-  cache = true,
   root,
   rootMargin,
   threshold = 0.25,
   timeout = 2000,
-  delay = 500,
+  
 } = Astro.props as props;
 
 const scriptContent = buildScript(
-  limit,
-  ignores,
+  cache,
+  delay,
   highPriorityPrefetch,
+  ignores,
+  limit,
   prefetch,
   prefetchUpgradation,
-  cache,
   root,
   rootMargin,
   threshold,
   timeout,
-  delay
 );
 
-script = await minify(scriptContent, { format : { beautify } });
+script = JSON.stringify(await minify(scriptContent, { format : { beautify } }));
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", script);
 
