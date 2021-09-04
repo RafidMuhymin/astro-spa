@@ -25,8 +25,6 @@ export default function (cache) {
             (await cache.match(l.href));`
         : "(await fetch(l.href));"
     }
-    
-    const cachedPage = ;
 
     const html = await cachedPage.text();
     const doc = new DOMParser().parseFromString(html, "text/html");

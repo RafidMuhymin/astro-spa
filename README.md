@@ -19,7 +19,7 @@ The complete list of features:
 11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
 12. It dispatches three functions, prefetch, navigate and observe, that can be called for prefetching, navigating and observing an anchor element programmatically
 13. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
-14. It provides a helper function, scan()! It can be used for detecting new links and observe them.
+14. It provides a helper function, scan()! It can be used for detecting new links and observe them
 
 ## Installing the plugin
 
