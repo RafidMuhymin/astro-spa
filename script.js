@@ -1,7 +1,7 @@
 import observer from "./observer";
 import constructPage from "./constructPage";
 import navigate from "./navigate";
-import prefetch from "./prefetch";
+import prefetchFunction from "./prefetch";
 import scan from "./scan";
 import observe from "./observe";
 
@@ -9,6 +9,9 @@ export default function (
   limit,
   ignores,
   highPriorityPrefetch,
+  prefetch,
+  prefetchUpgradation,
+  cache,
   root,
   rootMargin,
   threshold,
@@ -18,27 +21,42 @@ export default function (
   return `((w, d, l) => {
   requestIdleCallback(
     async () => {
-      w.cs || caches.delete("spafy");
+      ${
+        cache
+          ? `w.cs || caches.delete("spafy");
       w.cs = true;
       const cache = await caches.open("spafy");
-      
-      let prefetchTimeoutIDArray = [];
+      const cachePage = async (href) => {
+        return cache.put(href, await fetch(href));
+      }`
+          : ""
+      }
+
       let internalLinks = [];
 
+      ${
+        prefetch
+          ? `let prefetchTimeoutIDArray = [];
       const detectDataSaverAndCache = async (href) => {
         return (
-          (navigator.connection && navigator.connection.saveData) ||
-          (await cache.match(href))
+          (navigator.connection && navigator.connection.saveData) ${
+            cache ? "|| (await cache.match(href))" : ""
+          }
         );
-      };
+      };`
+          : ""
+      }
 
-      ${observer(delay, root, rootMargin, threshold) + constructPage()}
+      ${
+        observer(prefetch, delay, root, rootMargin, threshold) +
+        constructPage(cache)
+      }
       w.onpopstate = constructPage;
       ${
         navigate() +
-        prefetch(highPriorityPrefetch) +
+        prefetchFunction(prefetch, cache) +
         scan(limit, ignores) +
-        observe()
+        observe(prefetch, prefetchUpgradation, highPriorityPrefetch, cache)
       }
       scan();
     },

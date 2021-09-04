@@ -5,6 +5,7 @@ export default function (limit, ignores) {
         link.host === l.host &&
         !link.hash &&
         !link.hasAttribute("download") &&
+        !link.hasAttribute("data-spa-ignore") &&
         link.target !== "_blank" ${
           ignores
             ? "&& ignores.includes(link.href) && ignores.includes(link.pathname)"

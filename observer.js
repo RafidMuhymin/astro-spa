@@ -1,5 +1,6 @@
-export default function (delay, root, rootMargin, threshold) {
-  return `const observer = new IntersectionObserver(
+export default function (prefetch, delay, root, rootMargin, threshold) {
+  return prefetch
+    ? `const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry, i) => {
             entry.isIntersecting
@@ -18,5 +19,6 @@ export default function (delay, root, rootMargin, threshold) {
             ? `rootMargin: ${rootMargin},`
             : ""
         } threshold: ${threshold} }
-      );`;
+      );`
+    : "";
 }

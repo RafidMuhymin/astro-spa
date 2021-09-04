@@ -1,4 +1,4 @@
-export default function () {
+export default function (cache) {
   return `const constructPage = async () => {
     w.onNavigate && onNavigate();
 
@@ -18,7 +18,16 @@ export default function () {
         }, 500);
     })();
 
-    const cachedPage = (await cache.match(l.href)) || (await fetch(l.href));
+    const cachedPage = ${
+      cache
+        ? `(await cache.match(l.href)) ||
+            (await (cachePage(l.href))) ||
+            (await cache.match(l.href));`
+        : "(await fetch(l.href));"
+    }
+    
+    const cachedPage = ;
+
     const html = await cachedPage.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 

@@ -9,6 +9,9 @@ export interface props {
   external: boolean;
   ignores: string[];
   highPriorityPrefetch: boolean;
+  prefetch: boolean;
+  prefetchUpgradation: boolean;
+  cache: boolean;
   root: string;
   rootMargin: string;
   threshold: number;
@@ -21,7 +24,10 @@ const {
   limit,
   external = false,
   ignores,
-  highPriorityPrefetch,
+  highPriorityPrefetch = false,
+  prefetch = true;
+  prefetchUpgradation = true;
+  cache = true;
   root,
   rootMargin,
   threshold = 0.25,
@@ -33,6 +39,9 @@ const scriptContent = buildScript(
   limit,
   ignores,
   highPriorityPrefetch,
+  prefetch,
+  prefetchUpgradation,
+  cache,
   root,
   rootMargin,
   threshold,
