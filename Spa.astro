@@ -49,7 +49,7 @@ const scriptContent = buildScript(
   delay
 );
 
-script = minify(scriptContent, { format : { beautify } });
+script = await minify(scriptContent, { format : { beautify } });
 
 fs.writeFileSync("node_modules/astro-spa/spa.js", script);
 
