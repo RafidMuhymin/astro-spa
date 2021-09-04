@@ -17,7 +17,7 @@ export default function (limit, ignores) {
       (link) => !internalLinks.includes(link)
     );
   
-    ${limit > 0 ? "newInternalLinks.splice(limit - internalLinks.length)" : ""}
+    ${limit ? `newInternalLinks.splice(${limit} - internalLinks.length)` : ""}
 
     newInternalLinks.forEach((link) => {
       observe(link);
