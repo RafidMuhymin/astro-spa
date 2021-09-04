@@ -17,7 +17,11 @@ export default function (limit, ignores) {
       (link) => !internalLinks.includes(link)
     );
   
-    ${limit ? `newInternalLinks.splice(${limit} - internalLinks.length)` : ""}
+    ${
+      typeof limit === "number"
+        ? `newInternalLinks.splice(${limit} - internalLinks.length)`
+        : ""
+    }
 
     newInternalLinks.forEach((link) => {
       observe(link);
