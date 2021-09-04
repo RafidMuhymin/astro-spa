@@ -110,54 +110,69 @@ w.onMount = () => {
 ## Configuration Options (Component Props)
 
 ### beautify
+
 Type: `boolean`
 Default: `false`
 
+Whether or not the code the should be beautified. If true then the code will beautified and if false then the code will be minified using terser.
+
 ### cache
+
 Type: `boolean`
 Default: `true`
 
 ### delay
+
 Type: `number`
 Default: `500`
 
 ### external
+
 Type: `boolean`
 Default: `false`
 
 ### highPriorityPrefetch
+
 Type: `boolean`
 Default: `false`
 
 ### ignores
+
 Type: `array of strings`
 Default: `undefined`
 
 ### limit
+
 Type: `number`
 Default: `undefined`
 
 ### prefetch
+
 Type: `boolean`
 Default: `true`
 
 ### prefetchUpgradation
+
 Type: `boolean`
 Default: `true`
 
 ### root
+
 Type: `string`
 Default: `undefined`
 
 ### rootMargin
+
 Type: `string`
 Default: `undefined`
 
 ### threshold
+
 Type: `number`
 Default: `0.25`
 
 ### timeout
+
 Type: `number`
 Default: `2000`
 

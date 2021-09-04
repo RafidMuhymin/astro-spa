@@ -3,21 +3,21 @@ import fs from "node:fs";
 import { minify } from "terser";
 import buildScript from "./script.js";
 
-export interface props {
-  beautify: boolean;
-  cache: boolean;
-  delay: number;
-  external: boolean;
-  highPriorityPrefetch: boolean;
-  ignores: string[];
-  limit: number;
-  prefetch: boolean;
-  prefetchUpgradation: boolean;
-  root: string;
-  rootMargin: string;
-  threshold: number;
-  timeout: number;
-}
+// export interface props {
+//   beautify: boolean;
+//   cache: boolean;
+//   delay: number;
+//   external: boolean;
+//   highPriorityPrefetch: boolean;
+//   ignores: string[];
+//   limit: number;
+//   prefetch: boolean;
+//   prefetchUpgradation: boolean;
+//   root: string;
+//   rootMargin: string;
+//   threshold: number;
+//   timeout: number;
+// }
 
 const {
   beautify = false,
@@ -25,16 +25,16 @@ const {
   delay = 500,
   external = false,
   highPriorityPrefetch = false,
-  ignores,
-  limit,
+  ignores = [],
+  limit = 0,
   prefetch = true,
   prefetchUpgradation = true,
-  root,
-  rootMargin,
+  root = "",
+  rootMargin = "",
   threshold = 0.25,
   timeout = 2000,
   
-} = Astro.props as props;
+} = Astro.props;
 
 const scriptContent = buildScript(
   cache,

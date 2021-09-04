@@ -18,7 +18,7 @@ export default function (limit, ignores) {
     );
   
     ${
-      typeof limit === "number"
+      limit > 0
         ? `newInternalLinks.splice(${limit} - internalLinks.length)`
         : ""
     }
