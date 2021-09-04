@@ -25,15 +25,15 @@ const {
   external = false,
   ignores,
   highPriorityPrefetch = false,
-  prefetch = true;
-  prefetchUpgradation = true;
-  cache = true;
+  prefetch = true,
+  prefetchUpgradation = true,
+  cache = true,
   root,
   rootMargin,
   threshold = 0.25,
   timeout = 2000,
   delay = 500,
-} = Astro.props;
+} = Astro.props as props;
 
 const scriptContent = buildScript(
   limit,
