@@ -112,6 +112,7 @@ w.onMount = () => {
 ### beautify
 
 Type: `boolean`
+
 Default: `false`
 
 Whether or not the code the should be beautified. If true then the code will beautified and if false then the code will be minified using terser.
@@ -119,6 +120,7 @@ Whether or not the code the should be beautified. If true then the code will bea
 ### cache
 
 Type: `boolean`
+
 Default: `true`
 
 Whether or not Cache API will be used for caching the fetched and prefetched resources.
@@ -126,6 +128,7 @@ Whether or not Cache API will be used for caching the fetched and prefetched res
 ### delay
 
 Type: `number`
+
 Default: `500`
 
 The amount of time each link needs to stay inside the viewport before being prefetched, in milliseconds.
@@ -133,6 +136,7 @@ The amount of time each link needs to stay inside the viewport before being pref
 ### external
 
 Type: `boolean`
+
 Default: `false`
 
 Whether the code should be included in an external JavaScript file or be inlined.
@@ -140,6 +144,7 @@ Whether the code should be included in an external JavaScript file or be inlined
 ### highPriorityPrefetch
 
 Type: `boolean`
+
 Default: `false`
 
 Whether or not the internal links will be prefetched with a higher priority.
@@ -147,6 +152,7 @@ Whether or not the internal links will be prefetched with a higher priority.
 ### ignores
 
 Type: `array of strings`
+
 Default: `undefined`
 
 The urls that should not be fetched or prefetched. However, they won't be excluded from SPA navigation.
@@ -154,6 +160,7 @@ The urls that should not be fetched or prefetched. However, they won't be exclud
 ### limit
 
 Type: `number`
+
 Default: `undefined`
 
 The maximum number of links that can be prefetched.
@@ -161,6 +168,7 @@ The maximum number of links that can be prefetched.
 ### prefetch
 
 Type: `boolean`
+
 Default: `true`
 
 Whether or not the internal links will be prefetched.
@@ -168,6 +176,7 @@ Whether or not the internal links will be prefetched.
 ### prefetchUpgradation
 
 Type: `boolean`
+
 Default: `true`
 
 Whether or not the prefetching of the internal links will be upgraded to fetch on mouse over and touch start.
@@ -175,7 +184,9 @@ Whether or not the prefetching of the internal links will be upgraded to fetch o
 ### root
 
 Type: `string`
+
 Default: `undefined`
+
 Example: `"document.querySelector('#viewport')"`
 
 The HTML element to observe for in-viewport links to prefetch. However, the links will be fetched on mouse over and touch start.
@@ -183,6 +194,7 @@ The HTML element to observe for in-viewport links to prefetch. However, the link
 ### rootMargin
 
 Type: `string`
+
 Default: `undefined`
 
 The CSS margin property that should be respecting when computing intersection.
@@ -190,6 +202,7 @@ The CSS margin property that should be respecting when computing intersection.
 ### threshold
 
 Type: `number`
+
 Default: `0.25`
 
 The percentage of the area of each link that must have entered the viewport to be fetched, in its decimal form (0.25 = 25%).
@@ -197,6 +210,7 @@ The percentage of the area of each link that must have entered the viewport to b
 ### timeout
 
 Type: `number`
+
 Default: `2000`
 
 The amount of time in milliseconds the browser must stay idle before executing the script.
