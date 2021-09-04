@@ -50,13 +50,13 @@ const scriptContent = buildScript(
   timeout,
 );
 
-script = JSON.stringify(await minify(scriptContent, { format : { beautify } }));
+const { code } = await minify(scriptContent, { format : { beautify } });
 
-fs.writeFileSync("node_modules/astro-spa/spa.js", script);
+fs.writeFileSync("node_modules/astro-spa/spa.js", code);
 
 const scriptTag = `<script${
   external ? ` src="node_modules/astro-spa/spa.js"` : ""
-}>${external ? "" : script}</script>`;
+}>${external ? "" : code}</script>`;
 ---
 
 {scriptTag}
