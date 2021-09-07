@@ -1,8 +1,8 @@
 export default function (
-  prefetch,
-  prefetchUpgradation,
+  cache,
   highPriorityPrefetch,
-  cache
+  prefetch,
+  prefetchUpgradation
 ) {
   return `w.observe = async (anchor) => {
     const { href } = anchor;
@@ -13,8 +13,8 @@ export default function (
       }
     };
 
-    anchor.onclick = (e) => {navigateCallback(e)};
-    anchor.onkeydown = (e) => {navigateCallback(e)}
+    anchor.onclick = navigateCallback;
+    anchor.onkeydown = navigateCallback;
   
     ${
       prefetch
@@ -40,7 +40,7 @@ export default function (
                       : ${cache ? "cachePage(href);" : "fetch(href)"}`
                   : "prefetch(href)"
               }
-            }
+            }  
           };
         
           anchor.onmouseover = callback;

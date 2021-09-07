@@ -7,20 +7,29 @@ import observe from "./observe";
 
 export default function (
   cache,
+  containerSelector,
+  defaultAnimation,
   delay,
   highPriorityPrefetch,
   ignores,
   limit,
+  loadingIndicator,
   prefetch,
   prefetchUpgradation,
+  primaryLIColor,
   root,
   rootMargin,
+  secondaryLoadingIndicator,
+  secondaryLIColor,
   threshold,
-  timeout
+  timeout,
+  useRequestIdleCallbackOnly
 ) {
-  return `((w, d, l) => {
-  requestIdleCallback(
-    async () => {
+  const timeoutString =
+    typeof timeout === "number" ? `, { timeout: ${timeout} }` : "";
+  return `
+  ((w, d, l) => {
+    const callback = async () => {
       ${
         cache
           ? `w.cs || caches.delete("spafy");
@@ -48,19 +57,31 @@ export default function (
       }
 
       ${
-        observer(prefetch, delay, root, rootMargin, threshold) +
-        constructPage(cache)
+        observer(delay, prefetch, root, rootMargin, threshold) +
+        constructPage(
+          cache,
+          containerSelector,
+          defaultAnimation,
+          loadingIndicator,
+          primaryLIColor,
+          secondaryLIColor,
+          secondaryLoadingIndicator
+        )
       }
       w.onpopstate = constructPage;
       ${
         navigate() +
-        prefetchFunction(prefetch, cache) +
-        scan(limit, ignores) +
-        observe(prefetch, prefetchUpgradation, highPriorityPrefetch, cache)
+        prefetchFunction(cache, prefetch) +
+        scan(ignores, limit) +
+        observe(cache, highPriorityPrefetch, prefetch, prefetchUpgradation)
       }
       scan();
-    },
-    { timeout: ${timeout} }
-  );
+    };
+    requestIdleCallback${
+      useRequestIdleCallbackOnly
+        ? `(callback${timeoutString});`
+        : `? requestIdleCallback(callback${timeoutString})
+      : setTimeout(callback${timeoutString});`
+    }
 })(this, document, location);`;
 }

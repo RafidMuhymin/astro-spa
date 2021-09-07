@@ -1,4 +1,4 @@
-export default function (limit, ignores) {
+export default function (ignores, limit) {
   return `w.scan = () => {
     const allInternalLinks = Array.from(d.links).filter(
       (link) =>

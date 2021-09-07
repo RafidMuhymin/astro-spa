@@ -1,4 +1,4 @@
-export default function (prefetch, delay, root, rootMargin, threshold) {
+export default function (delay, prefetch, root, rootMargin, threshold) {
   return prefetch
     ? `const observer = new IntersectionObserver(
         (entries) => {

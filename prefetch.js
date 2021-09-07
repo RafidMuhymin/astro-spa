@@ -1,4 +1,4 @@
-export default function (prefetch, cache) {
+export default function (cache, prefetch) {
   return prefetch
     ? `w.prefetch = async (href) => {
     if (

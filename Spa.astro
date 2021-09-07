@@ -6,48 +6,68 @@ import buildScript from "./script.js";
 export interface props {
   beautify: boolean;
   cache: boolean;
+  containerSelector: string;
+  defaultAnimation: boolean;
   delay: number;
   external: boolean;
   highPriorityPrefetch: boolean;
   ignores: string[];
   limit: number;
+  loadingIndicator: boolean;
   prefetch: boolean;
   prefetchUpgradation: boolean;
+  primaryLIColor: string;
   root: string;
   rootMargin: string;
+  secondaryLoadingIndicator: boolean;
+  secondaryLIColor: string;
   threshold: number;
-  timeout: number;
+  timeout: number | false;
+  useRequestIdleCallbackOnly: boolean;
 }
 
 const {
   beautify = false,
   cache = true,
+  containerSelector = "",
+  defaultAnimation = true,
   delay = 500,
   external = false,
   highPriorityPrefetch = false,
   ignores = [],
   limit = 0,
+  loadingIndicator = true,
   prefetch = true,
   prefetchUpgradation = true,
+  primaryLIColor = "#42b3f5",
   root = "",
   rootMargin = "",
+  secondaryLoadingIndicator = false,
+  secondaryLIColor = "#4248f5",
   threshold = 0.25,
   timeout = 2000,
-  
-} = Astro.props;
+  useRequestIdleCallbackOnly = false,
+} = Astro.props as props;
 
 const scriptContent = buildScript(
   cache,
+  containerSelector,
+  defaultAnimation,
   delay,
   highPriorityPrefetch,
   ignores,
   limit,
+  loadingIndicator,
   prefetch,
   prefetchUpgradation,
+  primaryLIColor,
   root,
   rootMargin,
+  secondaryLoadingIndicator,
+  secondaryLIColor,
   threshold,
   timeout,
+  useRequestIdleCallbackOnly,
 );
 
 const { code } = await minify(scriptContent, { format : { beautify } });

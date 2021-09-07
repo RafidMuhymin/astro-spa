@@ -1,22 +1,54 @@
-export default function (cache) {
+import buildLoadingIndicator from "./loadingIndicator";
+
+export default function (
+  cache,
+  containerSelector,
+  defaultAnimation,
+  loadingIndicator,
+  primaryLIColor,
+  secondaryLIColor,
+  secondaryLoadingIndicator
+) {
+  const buildPage = `${
+    containerSelector
+      ? `d.querySelector("${containerSelector}").replaceWith(doc.querySelector("${containerSelector}"));
+      d.head.replaceWith(doc.head);`
+      : "d.documentElement.replaceWith(doc.documentElement);"
+  }
+  [
+    ...d.${
+      containerSelector
+        ? `querySelectorAll("head script, ${containerSelector} script")`
+        : "scripts"
+    }
+  ].forEach((script) => {
+    const newScript = d.createElement("script");
+    newScript.textContent = script.textContent;
+    for (const attr of script.attributes) {
+      newScript.setAttribute(attr.name, attr.value);
+    }
+    script.replaceWith(newScript);
+  });
+  w.onMount && onMount();
+  ${
+    defaultAnimation
+      ? `d.documentElement.animate(
+      {
+      opacity: [0, 1],
+      },
+      1000
+  );`
+      : ""
+  }`;
   return `const constructPage = async () => {
     w.onNavigate && onNavigate();
 
-    let pbw = 25;
-    let intervalID;
-    const progressBar = d.createElement("div");
-    (() => {
-        progressBar.style =
-        "position: fixed; top: 0px; left: 0px; width: 25vw; transition: width 0.5s ease 0s; height: 1.25vh; background-color: #62d3f5;";
-        d.body.appendChild(progressBar);
-
-        progressBar.animate({ width: ["0", "25vw"] }, 500);
-
-        intervalID = setInterval(() => {
-        pbw += Math.random() * ((99.5 - pbw) / 10);
-        progressBar.style.width = pbw + "vw";
-        }, 500);
-    })();
+    ${buildLoadingIndicator(
+      loadingIndicator,
+      primaryLIColor,
+      secondaryLIColor,
+      secondaryLoadingIndicator
+    )}
 
     const cachedPage = ${
       cache
@@ -29,25 +61,17 @@ export default function (cache) {
     const html = await cachedPage.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    clearInterval(intervalID);
-    progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
+    ${
+      loadingIndicator
+        ? `clearInterval(intervalID);
+        progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
         () => {
-        d.documentElement.replaceWith(doc.documentElement);
-        for (const script of d.scripts) {
-            const newScript = d.createElement("script");
-            newScript.textContent = script.textContent;
-            for (const attr of script.attributes) {
-            newScript.setAttribute(attr.name, attr.value);
-            }
-            script.replaceWith(newScript);
-        }
-        w.onMount && onMount();
-        d.documentElement.animate(
-            {
-            opacity: [0, 1],
-            },
-            1000
-        );
-        };
+            ${buildPage}
+        };`
+        : secondaryLoadingIndicator
+        ? `clearInterval(intervalID);
+          ${buildPage};`
+        : buildPage
+    }
     };`;
 }
