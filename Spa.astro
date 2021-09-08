@@ -72,11 +72,7 @@ const scriptContent = buildScript(
 
 const { code } = await minify(scriptContent, { format : { beautify } });
 
-fs.writeFileSync("node_modules/astro-spa/spa.js", code);
-
-const scriptTag = `<script${
-  external ? ` src="node_modules/astro-spa/spa.js"` : ""
-}>${external ? "" : code}</script>`;
+external && fs.writeFileSync("src/astro-spa/spa.js", code);
 ---
 
-{scriptTag}
+{external ? <script src={Astro.resolve("./spa.js")}></script> : `<script>${code}</script>`}
