@@ -14,6 +14,7 @@ export default function (
   ignores,
   limit,
   loadingIndicator,
+  localLinkDetector,
   prefetch,
   prefetchUpgradation,
   primaryLIColor,
@@ -29,6 +30,15 @@ export default function (
     typeof timeout === "number" ? `, { timeout: ${timeout} }` : "";
   return `
   ((w, d, l) => {
+    ${
+      localLinkDetector
+        ? `d.querySelectorAll("[data-active-class]").forEach((element) => {
+      element.classList.remove("active");
+      element.href === document.URL && element.classList.add(element.getAttribute("data-active-class"));
+    });`
+        : ""
+    }
+
     const callback = async () => {
       ${
         cache

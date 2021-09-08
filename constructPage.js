@@ -11,7 +11,8 @@ export default function (
 ) {
   const buildPage = `${
     containerSelector
-      ? `d.querySelector("${containerSelector}").replaceWith(doc.querySelector("${containerSelector}"));
+      ? `const newContent = doc.querySelector("${containerSelector}");
+      d.querySelector("${containerSelector}").replaceWith(newContent);
       d.head.replaceWith(doc.head);`
       : "d.documentElement.replaceWith(doc.documentElement);"
   }
@@ -32,7 +33,7 @@ export default function (
   w.onMount && onMount();
   ${
     defaultAnimation
-      ? `d.documentElement.animate(
+      ? `${containerSelector ? "newContent" : "d.documentElement"}.animate(
       {
       opacity: [0, 1],
       },
@@ -66,10 +67,16 @@ export default function (
         ? `clearInterval(intervalID);
         progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
         () => {
+            ${containerSelector ? "progressBar.remove();" : ""}
             ${buildPage}
         };`
         : secondaryLoadingIndicator
         ? `clearInterval(intervalID);
+          ${
+            containerSelector
+              ? "progressBar.remove();bgProgressBar.remove();"
+              : ""
+          }
           ${buildPage};`
         : buildPage
     }

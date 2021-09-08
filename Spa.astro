@@ -14,6 +14,7 @@ export interface props {
   ignores: string[];
   limit: number;
   loadingIndicator: boolean;
+  localLinkDetector: boolean;
   prefetch: boolean;
   prefetchUpgradation: boolean;
   primaryLIColor: string;
@@ -37,6 +38,7 @@ const {
   ignores = [],
   limit = 0,
   loadingIndicator = true,
+  localLinkDetector = true,
   prefetch = true,
   prefetchUpgradation = true,
   primaryLIColor = "#42b3f5",
@@ -58,6 +60,7 @@ const scriptContent = buildScript(
   ignores,
   limit,
   loadingIndicator,
+  localLinkDetector,
   prefetch,
   prefetchUpgradation,
   primaryLIColor,
@@ -75,4 +78,4 @@ const { code } = await minify(scriptContent, { format : { beautify } });
 external && fs.writeFileSync("public/spa.js", code);
 ---
 
-{external ? <script src="/spa.js"></script> : `<script>${code}</script>`}
+{external ? <script src={Astro.resolve("/spa.js")}></script> : `<script>${code}</script>`}

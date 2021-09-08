@@ -1,6 +1,6 @@
 {
   "name": "astro-spa",
-  "version": "0.9.3",
+  "version": "0.8.14",
   "description": "A component for Astro JS that turns a website into an SPA",
   "main": "./index.js",
   "repository": "https://github.com/RafidMuhymin/astro-spa",
