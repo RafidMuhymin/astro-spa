@@ -10,21 +10,21 @@ export interface props {
   defaultAnimation: boolean;
   delay: number;
   external: boolean;
+  forceRequestIdleCallback: boolean;
   highPriorityPrefetch: boolean;
   ignores: string[];
   limit: number;
-  loadingIndicator: boolean;
   localLinkDetector: boolean;
+  PPBColor: string;
   prefetch: boolean;
   prefetchUpgradation: boolean;
-  primaryLIColor: string;
+  progressBar: boolean;
   root: string;
   rootMargin: string;
-  secondaryLoadingIndicator: boolean;
-  secondaryLIColor: string;
+  secondaryProgressBar: boolean;
+  SPBColor: string;
   threshold: number;
   timeout: number | false;
-  useRequestIdleCallbackOnly: boolean;
 }
 
 const {
@@ -34,21 +34,21 @@ const {
   defaultAnimation = true,
   delay = 500,
   external = false,
-  highPriorityPrefetch = false,
-  ignores = [],
-  limit = 0,
-  loadingIndicator = true,
+  forceRequestIdleCallback = false,
+  highPriorityPrefetch = [],
+  ignores = 0,
+  limit = true,
   localLinkDetector = true,
+  PPBColor = true,
   prefetch = true,
-  prefetchUpgradation = true,
-  primaryLIColor = "#42b3f5",
+  prefetchUpgradation = "#42b3f5",
+  progressBar = "",
   root = "",
-  rootMargin = "",
-  secondaryLoadingIndicator = false,
-  secondaryLIColor = "#4248f5",
-  threshold = 0.25,
-  timeout = 2000,
-  useRequestIdleCallbackOnly = false,
+  rootMargin = false,
+  secondaryProgressBar = "#4248f5",
+  SPBColor = 0.25,
+  threshold = 2000,
+  timeout = false,
 } = Astro.props as props;
 
 const scriptContent = buildScript(
@@ -56,21 +56,21 @@ const scriptContent = buildScript(
   containerSelector,
   defaultAnimation,
   delay,
+  forceRequestIdleCallback,
   highPriorityPrefetch,
   ignores,
   limit,
-  loadingIndicator,
   localLinkDetector,
+  PPBColor,
   prefetch,
   prefetchUpgradation,
-  primaryLIColor,
+  progressBar,
   root,
   rootMargin,
-  secondaryLoadingIndicator,
-  secondaryLIColor,
+  secondaryProgressBar,
+  SPBColor,
   threshold,
   timeout,
-  useRequestIdleCallbackOnly,
 );
 
 const { code } = await minify(scriptContent, { format : { beautify } });

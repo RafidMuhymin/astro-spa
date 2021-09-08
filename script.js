@@ -10,21 +10,21 @@ export default function (
   containerSelector,
   defaultAnimation,
   delay,
+  forceRequestIdleCallback,
   highPriorityPrefetch,
   ignores,
   limit,
-  loadingIndicator,
   localLinkDetector,
+  PPBColor,
   prefetch,
   prefetchUpgradation,
-  primaryLIColor,
+  progressBar,
   root,
   rootMargin,
-  secondaryLoadingIndicator,
-  secondaryLIColor,
+  secondaryProgressBar,
+  SPBColor,
   threshold,
-  timeout,
-  useRequestIdleCallbackOnly
+  timeout
 ) {
   const timeoutString =
     typeof timeout === "number" ? `, { timeout: ${timeout} }` : "";
@@ -72,10 +72,10 @@ export default function (
           cache,
           containerSelector,
           defaultAnimation,
-          loadingIndicator,
-          primaryLIColor,
-          secondaryLIColor,
-          secondaryLoadingIndicator
+          PPBColor,
+          progressBar,
+          secondaryProgressBar,
+          SPBColor
         )
       }
       w.onpopstate = constructPage;
@@ -88,7 +88,7 @@ export default function (
       scan();
     };
     requestIdleCallback${
-      useRequestIdleCallbackOnly
+      forceRequestIdleCallback
         ? `(callback${timeoutString});`
         : `? requestIdleCallback(callback${timeoutString})
       : setTimeout(callback${timeoutString});`

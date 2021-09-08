@@ -1,13 +1,13 @@
-import buildLoadingIndicator from "./loadingIndicator";
+import buildProgressBar from "./progressBar";
 
 export default function (
   cache,
   containerSelector,
   defaultAnimation,
-  loadingIndicator,
-  primaryLIColor,
-  secondaryLIColor,
-  secondaryLoadingIndicator
+  PPBColor,
+  progressBar,
+  secondaryProgressBar,
+  SPBColor
 ) {
   const buildPage = `${
     containerSelector
@@ -44,12 +44,7 @@ export default function (
   return `const constructPage = async () => {
     w.onNavigate && onNavigate();
 
-    ${buildLoadingIndicator(
-      loadingIndicator,
-      primaryLIColor,
-      secondaryLIColor,
-      secondaryLoadingIndicator
-    )}
+    ${buildProgressBar(PPBColor, progressBar, secondaryProgressBar, SPBColor)}
 
     const cachedPage = ${
       cache
@@ -63,14 +58,14 @@ export default function (
     const doc = new DOMParser().parseFromString(html, "text/html");
 
     ${
-      loadingIndicator
+      progressBar
         ? `clearInterval(intervalID);
         progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
         () => {
             ${containerSelector ? "progressBar.remove();" : ""}
             ${buildPage}
         };`
-        : secondaryLoadingIndicator
+        : secondaryProgressBar
         ? `clearInterval(intervalID);
           ${
             containerSelector
