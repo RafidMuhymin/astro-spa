@@ -4,22 +4,22 @@ The Six UI frameworks supported by Astro for templating are primarily used for b
 
 But to enjoy the advantages of an SPA, I have written a tiny script for my personal project that can turn an Astro website into an SPA. It's not only just an SPA component/library but it comes with many other features also.
 
-The complete list of features:
+## Mechanism
 
 1. It prefetches the internal links using Intersection Observer for blazing-fast navigation
 2. It upgrades from prefetch to fetch on mouseover and touchstart if the resource hasn't been prefetched already
 3. It caches the prefetched resources using the Cache API
 4. It intercepts when you click on an internal link and then it tries to serve the request from cache, if a cache isn't found, it fetches the requested page and replace the current documentElement with the new documentElement
-5. It shows a progress bar similar to nprogress
-6. The progress bar delays new page load by 100ms to show a 100% completion transition
+5. If `containerSelector` is available then only that part of the page will get replaced
+6. It shows a progress bar if you have selected one
 7. Then it executes the scripts of the navigated page
-8. It shows a fade-in animation when the new page loads
+8. It shows a fade-in animation when the new page loads if not disabled
 9. It also works with popstate events (back/forward navigation)
 10. It clears the entire cache on page load/reloads to ensure there's no stale content
 11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
 12. It dispatches three functions, prefetch, navigate and observe, that can be called for prefetching, navigating and observing an anchor element programmatically
 13. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
-14. It provides a helper function, scan()! It can be used for detecting new links and observe them
+14. It provides a helper function, scan(), which can be used for detecting new links and observe them
 
 ## Installing the plugin
 
@@ -125,6 +125,24 @@ Default: `true`
 
 Whether or not Cache API will be used for caching the fetched and prefetched resources.
 
+### containerSelector
+
+Type: `string`
+
+Default: `""`
+
+Example: `"#root"`
+
+The querySelector of the element of the page that will get replaced instead of the whole document.
+
+### defaultAnimation
+
+Type: `boolean`
+
+Default: `true`
+
+Whether or not the default fade-in animation will be displayed on page load.
+
 ### delay
 
 Type: `number`
@@ -140,6 +158,16 @@ Type: `boolean`
 Default: `false`
 
 Whether the code should be included in an external JavaScript file or be inlined.
+
+### forceRequestIdleCallback
+
+Type: `boolean`
+
+Default: `false`
+
+Whether or not the code will fallback setTimeout if requestIdleCallback isn't supported.
+
+> **Note:** No polyfill gets included when this option is set to true.
 
 ### highPriorityPrefetch
 
@@ -165,6 +193,22 @@ Default: `undefined`
 
 The maximum number of links that can be prefetched.
 
+### localLinkDetector
+
+Type: `boolean`
+
+Default: `true`
+
+Whether or not the code will check for if any element is using the `data-active-class` attribute and whether it's `href` matches the current URL or not.
+
+### PPBColor
+
+Type: `string`
+
+Default: `"#42b3f5"`
+
+The color of the transitioning progress bar.
+
 ### prefetch
 
 Type: `boolean`
@@ -181,13 +225,21 @@ Default: `true`
 
 Whether or not the prefetching of the internal links will be upgraded to fetch on mouse over and touch start.
 
+### progressBar
+
+Type: `boolean`
+
+Default: `true`
+
+Whether or not the (primary) progress bar will be displayed.
+
 ### root
 
 Type: `string`
 
 Default: `undefined`
 
-Example: `"document.querySelector('#viewport')"`
+Example: `"#viewport"`
 
 The HTML element to observe for in-viewport links to prefetch. However, the links will be fetched on mouse over and touch start.
 
@@ -198,6 +250,24 @@ Type: `string`
 Default: `undefined`
 
 The CSS margin property that should be respecting when computing intersection.
+
+### secondaryProgressBar
+
+Type: `boolean`
+
+Default: `false`
+
+Whether or not the secondary progress bar will be displayed.
+
+> **Note:** The `progressBar` option also must be set to `false`.
+
+### SPBColor
+
+Type: `string`
+
+Default: `#4248f5`
+
+The background color of the secondary progress bar.
 
 ### threshold
 
@@ -217,23 +287,37 @@ The amount of time in milliseconds the browser must stay idle before executing t
 
 ## Supported Data Attributes
 
-The script will check if these attributes are present in the element. If present it'll perform the actions respecting them.
-
 ### data-spa-ignore
+
+Type: `boolean`
 
 If present, the element won't be observed.
 
 ### data-spa-no-prefetch
 
+Type: `boolean`
+
 If present, the link won't be prefetched.
 
 ### data-spa-high-priority-prefetch
+
+Type: `boolean`
 
 If present, the link will be prefetched with high priority.
 
 ### data-spa-no-prefetch-upgradation
 
+Type: `boolean`
+
 If present, prefetching of the link won't be upgraded to fetch on mouse over and touch start.
+
+### data-active-class
+
+Type: `string`
+
+If the href attribute of the element is equalt to the current URL then the value will be added to the classList of the element.
+
+> **Note:** If `localLinkDetector` is set to `false` then this attribute will be ignored.
 
 ## Demos
 
@@ -241,9 +325,6 @@ https://astro-spafy-component-demo.netlify.app/
 
 https://ohka-bots-site-astro-ksoqn4flk7-j2q7uvclm-tc-001.vercel.app/ (Thanks to @Tc-001)
 
-## Upcoming Features
+## v2
 
-- [ ] Configuration Options
-- [ ] A new SPA component that utilizes the new AppHistory API (currently only available in Chrome Canary build)
-- [ ] Containerization (Opt-in)
-- [ ] You tell me? Create an issue with your wishes
+I am willing to release a v2 that'll utilize the new AppHistory API which is currently only available in Chrome Canary under Experimental Flags.

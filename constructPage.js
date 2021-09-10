@@ -13,7 +13,8 @@ export default function (
     containerSelector
       ? `const newContent = doc.querySelector("${containerSelector}");
       d.querySelector("${containerSelector}").replaceWith(newContent);
-      d.head.replaceWith(doc.head);`
+      d.head.replaceWith(doc.head);
+      styleLocalLink();`
       : "d.documentElement.replaceWith(doc.documentElement);"
   }
   [

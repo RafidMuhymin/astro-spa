@@ -32,10 +32,13 @@ export default function (
   ((w, d, l) => {
     ${
       localLinkDetector
-        ? `d.querySelectorAll("[data-active-class]").forEach((element) => {
-      element.classList.remove("active");
-      element.href === document.URL && element.classList.add(element.getAttribute("data-active-class"));
-    });`
+        ? `const styleLocalLink = () => {
+            d.querySelectorAll("[data-active-class]").forEach((element) => {
+              element.classList.remove("active");
+              element.href === document.URL && element.classList.add(element.getAttribute("data-active-class"));
+            });
+          };
+          styleLocalLink();`
         : ""
     }
 

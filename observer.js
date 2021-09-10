@@ -12,11 +12,11 @@ export default function (delay, prefetch, root, rootMargin, threshold) {
         },
         {${
           root && rootMargin
-            ? `root: ${root}, rootMargin: ${rootMargin},`
+            ? `root: document.querySelector("${root}"), rootMargin: "${rootMargin}",`
             : root
-            ? `root: ${root},`
+            ? `root: document.querySelector("${root}"),`
             : rootMargin
-            ? `rootMargin: ${rootMargin},`
+            ? `rootMargin: "${rootMargin}",`
             : ""
         } threshold: ${threshold} }
       );`
