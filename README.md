@@ -330,7 +330,7 @@ If the href attribute of the element is equalt to the current URL then the value
 
 https://astro-spafy-component-demo.netlify.app/
 
-https://ohka-bots-site-astro-ksoqn4flk7-j2q7uvclm-tc-001.vercel.app/ (Thanks to @Tc-001)
+https://ohka-bots-site-astro-ksoqn4flk7-li4hm4z1a-tc-001.vercel.app/ (Thanks to @Tc-001)
 
 ## v2
 
