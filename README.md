@@ -24,7 +24,7 @@ But to enjoy the advantages of an SPA, I have written a tiny script for my perso
 9. It also works with popstate events (back/forward navigation)
 10. It clears the entire cache on page load/reloads to ensure there's no stale content
 11. If data saver is enabled (on mobile devices), it won't fetch or prefetch the pages
-12. It dispatches three functions, prefetch, navigate and observe, that can be called for prefetching, navigating and observing an anchor element programmatically
+12. It dispatches three functions, prefetch, navigate and observe, that can be called for prefetching, navigating, and observing an anchor element programmatically
 13. It has two lifecycle functions, onNavigate & onMount that can be called to add effects and execute code
 14. It provides a helper function, scan(), which can be used for detecting new links and observe them
 
@@ -106,7 +106,7 @@ w.onNavigate = () => {
 
 ### w.onMount
 
-You can use the global onRender lifecycle function to execute code when the navigated pages has completed loading and executed the scripts. It's an alternative to the DOMContentLoaded or window.load event.
+You can use the global onRender lifecycle function to execute code when the navigated pages have completed loading and executed the scripts. It's an alternative to the DOMContentLoaded or window.load event.
 
 ```js
 w.onMount = () => {
@@ -122,7 +122,7 @@ Type: `boolean`
 
 Default: `false`
 
-Whether or not the code the should be beautified. If true then the code will beautified and if false then the code will be minified using terser.
+Whether or not the code should be beautified. If true then the code will be beautified and if false then the code will be minified using terser.
 
 ### cache
 
@@ -140,7 +140,7 @@ Default: `""`
 
 Example: `"#root"`
 
-The querySelector of the element of the page that will get replaced instead of the whole document.
+The querySelector of the element of the page, which will get replaced instead of the whole document.
 
 ### defaultAnimation
 
@@ -190,7 +190,7 @@ Type: `array of strings`
 
 Default: `undefined`
 
-The urls that should not be fetched or prefetched. However, they won't be excluded from SPA navigation.
+The URLs, which should not be fetched or prefetched. However, they won't be excluded from SPA navigation.
 
 ### limit
 
@@ -206,7 +206,7 @@ Type: `boolean`
 
 Default: `true`
 
-Whether or not the code will check for if any element is using the `data-active-class` attribute and whether it's `href` matches the current URL or not.
+Whether or not the code will check for if any element is using the `data-active-class` attribute and whether its `href` matches the current URL or not.
 
 ### PPBColor
 
@@ -230,7 +230,7 @@ Type: `boolean`
 
 Default: `true`
 
-Whether or not the prefetching of the internal links will be upgraded to fetch on mouse over and touch start.
+Whether or not the prefetching of the internal links will be upgraded to fetch on `mouseover` and `touchstart`.
 
 ### progressBar
 
@@ -248,7 +248,7 @@ Default: `undefined`
 
 Example: `"#viewport"`
 
-The HTML element to observe for in-viewport links to prefetch. However, the links will be fetched on mouse over and touch start.
+The HTML element to observe for in-viewport links to prefetch. However, the links will be fetched on `mouseover` and `touchstart`.
 
 ### rootMargin
 
@@ -256,7 +256,7 @@ Type: `string`
 
 Default: `undefined`
 
-The CSS margin property that should be respecting when computing intersection.
+The CSS margin property, which should be respected when computing intersection.
 
 ### scrollIntoView
 
@@ -334,13 +334,13 @@ If present, the link will be prefetched with high priority.
 
 Type: `boolean`
 
-If present, prefetching of the link won't be upgraded to fetch on mouse over and touch start.
+If present, prefetching of the link won't be upgraded to fetch on `mouseover` and `touchstart`.
 
 ### data-active-class
 
 Type: `string`
 
-If the href attribute of the element is equalt to the current URL then the value will be added to the classList of the element.
+If the href attribute of the element is equal to the current URL then the value will be added to the classList of the element.
 
 > **Note:** If `localLinkDetector` is set to `false` then this attribute will be ignored.
 
