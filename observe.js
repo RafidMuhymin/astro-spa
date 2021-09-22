@@ -14,7 +14,9 @@ export default function (
     };
 
     anchor.onclick = navigateCallback;
-    anchor.onkeydown = navigateCallback;
+    anchor.onkeyup = (e) => {
+      e.key === "Enter" && navigateCallback(e);
+    };
   
     ${
       prefetch
