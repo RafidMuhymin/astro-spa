@@ -6,13 +6,21 @@ export default function (
   defaultAnimation,
   PPBColor,
   progressBar,
+  scrollIntoView,
+  scrollIntoViewOptions,
   secondaryProgressBar,
   SPBColor
 ) {
   const buildPage = `${
     containerSelector
       ? `const newContent = doc.querySelector("${containerSelector}");
-      d.querySelector("${containerSelector}").replaceWith(newContent);
+      ${
+        scrollIntoView
+          ? `const container = d.querySelector("${containerSelector}");
+      container.replaceWith(newContent);
+      newContent.scrollIntoView(${JSON.stringify(scrollIntoViewOptions)});`
+          : ""
+      }
       d.head.replaceWith(doc.head);
       styleLocalLink();`
       : "d.documentElement.replaceWith(doc.documentElement);"

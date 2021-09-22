@@ -3,6 +3,12 @@ import fs from "node:fs";
 import { minify } from "terser";
 import buildScript from "./script.js";
 
+export interface scrollIntoViewOptions {
+  behavior: string;
+  block: string;
+  inline: string;
+}
+
 export interface props {
   beautify: boolean;
   cache: boolean;
@@ -21,6 +27,8 @@ export interface props {
   progressBar: boolean;
   root: string;
   rootMargin: string;
+  scrollIntoView: boolean;
+  scrollIntoViewOptions: boolean | scrollIntoViewOptions;
   secondaryProgressBar: boolean;
   SPBColor: string;
   threshold: number;
@@ -45,6 +53,8 @@ const {
   progressBar = true,
   root = "",
   rootMargin = "",
+  scrollIntoView = true,
+  scrollIntoViewOptions = { behavior: "smooth" },
   secondaryProgressBar = false,
   SPBColor = "#4248f5",
   threshold = 0.25,
@@ -67,6 +77,8 @@ const scriptContent = buildScript(
   progressBar,
   root,
   rootMargin,
+  scrollIntoView,
+  scrollIntoViewOptions,
   secondaryProgressBar,
   SPBColor,
   threshold,

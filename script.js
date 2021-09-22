@@ -21,6 +21,8 @@ export default function (
   progressBar,
   root,
   rootMargin,
+  scrollIntoView,
+  scrollIntoViewOptions,
   secondaryProgressBar,
   SPBColor,
   threshold,
@@ -77,11 +79,17 @@ export default function (
           defaultAnimation,
           PPBColor,
           progressBar,
+          scrollIntoView,
+          scrollIntoViewOptions,
           secondaryProgressBar,
           SPBColor
         )
       }
-      w.onpopstate = constructPage;
+
+      w.onpopstate = () => {
+        l.hash || constructPage();
+      };
+
       ${
         navigate() +
         prefetchFunction(cache, prefetch) +
