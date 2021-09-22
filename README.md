@@ -258,6 +258,22 @@ Default: `undefined`
 
 The CSS margin property that should be respecting when computing intersection.
 
+### scrollIntoView
+
+Type: `boolean`
+
+Default: `true`
+
+Whether or not the `scrollIntoView` function of the container will be called when using containerization.
+
+### scrollIntoViewOptions
+
+Type: `boolean` | `scrollIntoViewOptions`
+
+Default: `{ behavior: "smooth" }`
+
+It's the parameter of the `scrollIntoView` function. For more info check the article at https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView.
+
 ### secondaryProgressBar
 
 Type: `boolean`
@@ -286,11 +302,13 @@ The percentage of the area of each link that must have entered the viewport to b
 
 ### timeout
 
-Type: `number`
+Type: `number` or `false` (`true` is not a valid value)
 
 Default: `2000`
 
-The amount of time in milliseconds the browser must stay idle before executing the script.
+The amount of time in milliseconds the browser must stay idle before executing the script. If `false` is passed instead of a then the `timeout` won't be passed to `requestIdleCallback`.
+
+> **Note:** There's difference between `{ timeout : 0 }` and no `timeout` key passed. The first will schedule the `idleCallback` to run asynchronously and will call the function after the shortest possible delay. And the second won't call the `idleCallback` until the main thread is free.
 
 ## Supported Data Attributes
 
