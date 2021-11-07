@@ -21,6 +21,7 @@ export default function (
   progressBar,
   root,
   rootMargin,
+  scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
   secondaryProgressBar,
@@ -79,6 +80,7 @@ export default function (
           defaultAnimation,
           PPBColor,
           progressBar,
+          scanOnMount,
           scrollIntoView,
           scrollIntoViewOptions,
           secondaryProgressBar,
@@ -104,5 +106,5 @@ export default function (
         : `? requestIdleCallback(callback${timeoutString})
       : setTimeout(callback${timeoutString});`
     }
-})(this, document, location);`;
+  })(this, document, location);`;
 }

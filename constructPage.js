@@ -6,6 +6,7 @@ export default function (
   defaultAnimation,
   PPBColor,
   progressBar,
+  scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
   secondaryProgressBar,
@@ -40,6 +41,7 @@ export default function (
       script.replaceWith(newScript);
     });
 
+    ${scanOnMount ? "scan();" : ""}
     w.dispatchEvent(new Event("mount"));
     w.onMount && w.onMount();
 

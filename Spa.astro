@@ -26,6 +26,7 @@ export interface Props {
   progressBar: boolean;
   root: string;
   rootMargin: string;
+  scanOnMount: boolean;
   scrollIntoView: boolean;
   scrollIntoViewOptions: boolean | scrollIntoViewOptions;
   secondaryProgressBar: boolean;
@@ -51,6 +52,7 @@ const {
   progressBar = true,
   root = "",
   rootMargin = "",
+  scanOnMount = true,
   scrollIntoView = true,
   scrollIntoViewOptions = { behavior: "smooth" },
   secondaryProgressBar = false,
@@ -75,6 +77,7 @@ const scriptContent = buildScript(
   progressBar,
   root,
   rootMargin,
+  scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
   secondaryProgressBar,
