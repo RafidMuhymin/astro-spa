@@ -34,7 +34,7 @@ export default function (
       }
     ].forEach((script) => {
       const newScript = d.createElement("script");
-      newScript.textContent = script.textContent;
+      newScript.text = script.text;
       for (const attr of script.attributes) {
         newScript.setAttribute(attr.name, attr.value);
       }
