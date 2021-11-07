@@ -4,9 +4,9 @@ import { minify } from "terser";
 import buildScript from "./script.js";
 
 export interface scrollIntoViewOptions {
-  behavior: string;
-  block: string;
-  inline: string;
+  behavior?: "smooth" | "auto";
+  block?: "start" | "center" | "end" | "nearest";
+  inline?: "start" | "center" | "end" | "nearest";
 }
 
 export interface props {
