@@ -10,7 +10,6 @@ export interface scrollIntoViewOptions {
 }
 
 export interface props {
-  beautify: boolean;
   cache: boolean;
   containerSelector: string;
   defaultAnimation: boolean;
@@ -36,7 +35,6 @@ export interface props {
 }
 
 const {
-  beautify = false,
   cache = true,
   containerSelector = "",
   defaultAnimation = true,
@@ -82,10 +80,10 @@ const scriptContent = buildScript(
   secondaryProgressBar,
   SPBColor,
   threshold,
-  timeout,
+  timeout
 );
 
-const { code } = await minify(scriptContent, { format : { beautify } });
+const { code } = await minify(scriptContent);
 
 external && fs.writeFileSync("public/spa.js", code);
 ---
