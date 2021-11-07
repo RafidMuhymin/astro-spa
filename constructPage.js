@@ -25,33 +25,38 @@ export default function (
       styleLocalLink();`
       : "d.documentElement.replaceWith(doc.documentElement);"
   }
-  [
-    ...d.${
-      containerSelector
-        ? `querySelectorAll("head script, ${containerSelector} script")`
-        : "scripts"
-    }
-  ].forEach((script) => {
-    const newScript = d.createElement("script");
-    newScript.textContent = script.textContent;
-    for (const attr of script.attributes) {
-      newScript.setAttribute(attr.name, attr.value);
-    }
-    script.replaceWith(newScript);
-  });
-  w.onMount && onMount();
-  ${
-    defaultAnimation
-      ? `${containerSelector ? "newContent" : "d.documentElement"}.animate(
-      {
-      opacity: [0, 1],
-      },
-      1000
-  );`
-      : ""
-  }`;
+    [
+      ...d.${
+        containerSelector
+          ? `querySelectorAll("head script, ${containerSelector} script")`
+          : "scripts"
+      }
+    ].forEach((script) => {
+      const newScript = d.createElement("script");
+      newScript.textContent = script.textContent;
+      for (const attr of script.attributes) {
+        newScript.setAttribute(attr.name, attr.value);
+      }
+      script.replaceWith(newScript);
+    });
+
+    w.dispatchEvent(new Event("mount"));
+    w.onMount && w.onMount();
+
+    ${
+      defaultAnimation
+        ? `${containerSelector ? "newContent" : "d.documentElement"}.animate(
+        {
+        opacity: [0, 1],
+        },
+        1000
+    );`
+        : ""
+    }`;
+
   return `const constructPage = async () => {
-    w.onNavigate && onNavigate();
+    w.dispatchEvent(new Event("navigate"));
+    w.onNavigate && w.onNavigate();
 
     ${buildProgressBar(PPBColor, progressBar, secondaryProgressBar, SPBColor)}
 

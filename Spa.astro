@@ -9,7 +9,7 @@ export interface scrollIntoViewOptions {
   inline?: "start" | "center" | "end" | "nearest";
 }
 
-export interface props {
+export interface Props {
   cache: boolean;
   containerSelector: string;
   defaultAnimation: boolean;
@@ -57,7 +57,7 @@ const {
   SPBColor = "#4248f5",
   threshold = 0.25,
   timeout = 2000,
-} = Astro.props as props;
+} = Astro.props as Partial<Props>;
 
 const scriptContent = buildScript(
   cache,
