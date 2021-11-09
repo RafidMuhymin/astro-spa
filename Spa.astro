@@ -1,5 +1,6 @@
 ---
 import fs from "node:fs";
+import crypto from "node:crypto";
 import { minify } from "terser";
 import buildScript from "./script.js";
 
@@ -90,7 +91,17 @@ const scriptContent = buildScript(
 
 const { code } = await minify(scriptContent);
 
-external && fs.writeFileSync("public/spa.js", code);
+fs.existsSync("public") || fs.mkdirSync("public");
+
+const path = `public/astro-spa-${crypto
+  .createHash("sha256")
+  .update(code)
+  .digest("hex")
+  .substr(0, 8)}.js`;
+
+if (external) {
+  fs.readFileSync(path, "utf8") === code || fs.writeFileSync(path, code);
+}
 
 const keys = Object.keys(attributes || {});
 const values = Object.values(attributes || {});
@@ -102,4 +113,4 @@ const htmlAttributes = keys
   .join(" ");
 ---
 
-{external ? <script {...attributes} src={Astro.resolve("/spa.js")}></script> : `<script ${htmlAttributes ? htmlAttributes : ""}>${code}</script>`}
+{external ? <script {...attributes} src={path.substr(6)}></script> : `<script ${htmlAttributes ? htmlAttributes : ""}>${code}</script>`}
