@@ -10,6 +10,7 @@ export interface scrollIntoViewOptions {
 }
 
 export interface Props {
+  attributes: Partial<HTMLScriptElement>;
   cache: boolean;
   containerSelector: string;
   defaultAnimation: boolean;
@@ -36,6 +37,7 @@ export interface Props {
 }
 
 const {
+  attributes,
   cache = true,
   containerSelector = "",
   defaultAnimation = true,
@@ -89,6 +91,15 @@ const scriptContent = buildScript(
 const { code } = await minify(scriptContent);
 
 external && fs.writeFileSync("public/spa.js", code);
+
+const keys = Object.keys(attributes || {});
+const values = Object.values(attributes || {});
+const htmlAttributes = keys
+  .map(
+    (key, i) =>
+      `${key}${typeof values[i] === "boolean" ? "" : `="${values[i]}"`}`
+  )
+  .join(" ");
 ---
 
-{external ? <script src={Astro.resolve("/spa.js")}></script> : `<script>${code}</script>`}
+{external ? <script {...attributes} src={Astro.resolve("/spa.js")}></script> : `<script ${htmlAttributes ? htmlAttributes : ""}>${code}</script>`}
