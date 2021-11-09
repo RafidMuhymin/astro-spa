@@ -5,6 +5,7 @@ export default function (
   prefetchUpgradation
 ) {
   return `w.observe = async (anchor) => {
+    const addEventListener = anchor.addEventListener.bind(anchor);
     const { href } = anchor;
     const navigateCallback = (e) => {
       if (!e.ctrlKey) {
@@ -13,11 +14,9 @@ export default function (
       }
     };
 
-    anchor.onclick = navigateCallback;
-    anchor.onkeyup = (e) => {
-      e.key === "Enter" && navigateCallback(e);
-    };
-  
+    addEventListener("click", navigateCallback);
+    addEventListener("keyup", (e) => { e.key === "Enter" && navigateCallback(e); });
+
     ${
       prefetch
         ? `if (!anchor.hasAttribute("data-spa-no-prefetch")) {
@@ -44,9 +43,9 @@ export default function (
               }
             }  
           };
-        
-          anchor.onmouseover = callback;
-          anchor.ontouchstart = callback;
+
+          addEventListener("mouseover", callback);
+          addEventListener("touchstart", callback);
         }`
         : ""
     }

@@ -88,9 +88,7 @@ export default function (
         )
       }
 
-      w.onpopstate = () => {
-        l.hash || constructPage();
-      };
+      w.addEventListener("popstate", () => { l.hash || constructPage(); });
 
       ${
         navigate() +
