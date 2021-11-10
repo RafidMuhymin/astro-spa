@@ -64,7 +64,7 @@ export default function (
           ? `let prefetchTimeoutIDArray = [];
       const detectDataSaverAndCache = async (href) => {
         return (
-          (navigator.connection && navigator.connection.saveData) ${
+          navigator.connection?.saveData ${
             cache ? "|| (await cache.match(href))" : ""
           }
         );
