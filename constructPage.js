@@ -42,7 +42,7 @@ export default function (
       script.replaceWith(newScript);
     });
 
-    ${scanOnMount ? "scan();" : ""}
+    ${scanOnMount ? "AstroSpa.scan();" : ""}
     w.dispatchEvent(new Event("mount"));
     w.onMount && w.onMount();
 

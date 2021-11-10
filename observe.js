@@ -4,13 +4,13 @@ export default function (
   prefetch,
   prefetchUpgradation
 ) {
-  return `w.observe = async (anchor) => {
+  return `AstroSpa.observe = async (anchor) => {
     const addEventListener = anchor.addEventListener.bind(anchor);
     const { href } = anchor;
     const navigateCallback = (e) => {
       if (!e.ctrlKey) {
         e.preventDefault();
-        navigate(href);
+        AstroSpa.navigate(href);
       }
     };
 
@@ -37,9 +37,9 @@ export default function (
               ${
                 prefetchUpgradation
                   ? `anchor.hasAttribute("data-spa-no-prefetch-upgradation")
-                      ? prefetch(href)
+                      ? AstroSpa.prefetch(href)
                       : ${cache ? "cachePage(href);" : "fetch(href)"}`
-                  : "prefetch(href)"
+                  : "AstroSpa.prefetch(href)"
               }
             }  
           };

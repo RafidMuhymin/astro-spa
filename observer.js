@@ -5,7 +5,7 @@ export default function (delay, prefetch, root, rootMargin, threshold) {
           entries.forEach((entry, i) => {
             entry.isIntersecting
               ? (prefetchTimeoutIDArray[i] = setTimeout(() => {
-                  prefetch(entry.target.href);
+                  AstroSpa.prefetch(entry.target.href);
                 }, ${delay}))
               : clearTimeout(prefetchTimeoutIDArray[i]);
           });

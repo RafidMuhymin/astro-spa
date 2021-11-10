@@ -1,6 +1,6 @@
 export default function (cache, prefetch) {
   return prefetch
-    ? `w.prefetch = async (href) => {
+    ? `AstroSpa.prefetch = async (href) => {
     if (
       !d.querySelector('link[href="' + href + '"]') &&
       !(await detectDataSaverAndCache(href))

@@ -33,6 +33,7 @@ export default function (
     typeof timeout === "number" ? `, { timeout: ${timeout} }` : "";
   return `
   ((w, d, l) => {
+    const AstroSpa = w.spa ||= {};
     ${
       localLinkDetector
         ? `const styleLocalLink = () => {
@@ -48,8 +49,8 @@ export default function (
     const callback = async () => {
       ${
         cache
-          ? `w.cs || caches.delete("spafy");
-      w.cs = true;
+          ? `AstroSpa.cs || caches.delete("spafy");
+      AstroSpa.cs = true;
       const cache = await caches.open("spafy");
       const cachePage = async (href) => {
         return cache.put(href, await fetch(href));
@@ -97,7 +98,7 @@ export default function (
         scan(ignores, limit) +
         observe(cache, highPriorityPrefetch, prefetch, prefetchUpgradation)
       }
-      scan();
+      AstroSpa.scan();
     };
     requestIdleCallback${
       forceRequestIdleCallback

@@ -1,5 +1,5 @@
 export default function (ignores, limit) {
-  return `w.scan = () => {
+  return `AstroSpa.scan = () => {
     const allInternalLinks = Array.from(d.links).filter(
       (link) =>
         link.host === l.host &&
@@ -24,7 +24,7 @@ export default function (ignores, limit) {
     }
 
     newInternalLinks.forEach((link) => {
-      observe(link);
+      AstroSpa.observe(link);
     })
   
     internalLinks.push(...newInternalLinks);
