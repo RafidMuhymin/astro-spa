@@ -1,11 +1,13 @@
-import observer from "./observer";
+import analyticsFunction from "./analytics";
 import constructPage from "./constructPage";
+import observe from "./observe";
+import observer from "./observer";
 import navigate from "./navigate";
 import prefetchFunction from "./prefetch";
 import scan from "./scan";
-import observe from "./observe";
 
 export default function (
+  analytics,
   cache,
   containerSelector,
   defaultAnimation,
@@ -76,6 +78,7 @@ export default function (
       ${
         observer(delay, prefetch, root, rootMargin, threshold) +
         constructPage(
+          analytics,
           cache,
           containerSelector,
           defaultAnimation,
@@ -99,6 +102,7 @@ export default function (
         observe(cache, highPriorityPrefetch, prefetch, prefetchUpgradation)
       }
       AstroSpa.scan();
+      ${analyticsFunction(analytics)}
     };
     requestIdleCallback${
       forceRequestIdleCallback
