@@ -4,6 +4,7 @@ export default function (
   cache,
   containerSelector,
   defaultAnimation,
+  localLinkDetector,
   PPBColor,
   progressBar,
   scanOnMount,
@@ -23,7 +24,7 @@ export default function (
           : ""
       }
       d.head.replaceWith(doc.head);
-      styleLocalLink();`
+      ${localLinkDetector ? "styleLocalLink();" : ""}`
       : "d.documentElement.replaceWith(doc.documentElement);"
   }
     [

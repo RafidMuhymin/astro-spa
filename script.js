@@ -78,6 +78,7 @@ export default function (
           cache,
           containerSelector,
           defaultAnimation,
+          localLinkDetector,
           PPBColor,
           progressBar,
           scanOnMount,
