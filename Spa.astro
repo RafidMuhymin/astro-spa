@@ -10,15 +10,17 @@ export interface scrollIntoViewOptions {
   inline?: "start" | "center" | "end" | "nearest";
 }
 
+export interface analytics {
+  trackingID: string;
+  anonymizeIP?: boolean;
+  colorDepth?: boolean;
+  characterSet?: boolean;
+  screenSize?: boolean;
+  language?: boolean;
+}
+
 export interface Props {
-  analytics: {
-    trackingID: string;
-    anonymizeIP?: boolean;
-    colorDepth?: boolean;
-    characterSet?: boolean;
-    screenSize?: boolean;
-    language?: boolean;
-  };
+  analytics: analytics;
   attributes: Partial<HTMLScriptElement>;
   cache: boolean;
   containerSelector: string;

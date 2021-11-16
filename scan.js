@@ -1,8 +1,8 @@
 export default function (ignores, limit) {
   return `AstroSpa.scan = () => {
-    const allInternalLinks = Array.from(d.links).filter(
+    const allInternalLinks = Array.from(document.links).filter(
       (link) =>
-        link.host === l.host &&
+        link.host === location.host &&
         !link.hash &&
         !link.hasAttribute("download") &&
         !link.hasAttribute("data-spa-ignore") &&
