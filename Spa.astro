@@ -10,6 +10,15 @@ export interface scrollIntoViewOptions {
   inline?: "start" | "center" | "end" | "nearest";
 }
 
+export interface progressBarOptions {
+  height?: string;
+  secondary?: boolean;
+  colors?: {
+    foreground?: string;
+    background?: string;
+  };
+}
+
 export interface analytics {
   trackingID: string;
   anonymizeIP?: boolean;
@@ -32,17 +41,15 @@ export interface Props {
   ignores: string[];
   limit: number;
   localLinkDetector: boolean;
-  PPBColor: string;
   prefetch: boolean;
   prefetchUpgradation: boolean;
   progressBar: boolean;
+  progressBarOptions: progressBarOptions;
   root: string;
   rootMargin: string;
   scanOnMount: boolean;
   scrollIntoView: boolean;
   scrollIntoViewOptions: boolean | scrollIntoViewOptions;
-  secondaryProgressBar: boolean;
-  SPBColor: string;
   threshold: number;
   timeout: number | false;
 }
@@ -60,17 +67,15 @@ const {
   ignores = [],
   limit = 0,
   localLinkDetector = true,
-  PPBColor = "#42b3f5",
   prefetch = true,
   prefetchUpgradation = true,
   progressBar = true,
+  progressBarOptions,
   root = "",
   rootMargin = "",
   scanOnMount = true,
   scrollIntoView = true,
   scrollIntoViewOptions = { behavior: "smooth" },
-  secondaryProgressBar = false,
-  SPBColor = "#4248f5",
   threshold = 0.25,
   timeout = 2000,
 } = Astro.props as Partial<Props>;
@@ -86,17 +91,15 @@ const scriptContent = buildScript(
   ignores,
   limit,
   localLinkDetector,
-  PPBColor,
   prefetch,
   prefetchUpgradation,
   progressBar,
+  progressBarOptions,
   root,
   rootMargin,
   scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
-  secondaryProgressBar,
-  SPBColor,
   threshold,
   timeout
 );

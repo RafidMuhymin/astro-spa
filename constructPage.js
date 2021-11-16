@@ -6,13 +6,11 @@ export default function (
   containerSelector,
   defaultAnimation,
   localLinkDetector,
-  PPBColor,
   progressBar,
+  progressBarOptions,
   scanOnMount,
   scrollIntoView,
-  scrollIntoViewOptions,
-  secondaryProgressBar,
-  SPBColor
+  scrollIntoViewOptions
 ) {
   const buildPage = `${
     containerSelector
@@ -65,7 +63,7 @@ export default function (
     window.dispatchEvent(new Event("navigate"));
     window.onNavigate && window.onNavigate();
 
-    ${buildProgressBar(PPBColor, progressBar, secondaryProgressBar, SPBColor)}
+    ${buildProgressBar(progressBar, progressBarOptions)}
 
     const cachedPage = ${
       cache
@@ -80,21 +78,17 @@ export default function (
 
     ${
       progressBar
-        ? `clearInterval(intervalID);
-        progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
-        () => {
-            ${containerSelector ? "progressBar.remove();" : ""}
-            ${buildPage}
-        };`
-        : secondaryProgressBar
-        ? `clearInterval(intervalID);
-          ${
-            containerSelector
-              ? "progressBar.remove();bgProgressBar.remove();"
-              : ""
-          }
-          ${buildPage};`
-        : buildPage
+        ? progressBarOptions?.secondary
+          ? `clearInterval(intervalID);
+      ${containerSelector ? "progressBar.remove();bgProgressBar.remove();" : ""}
+      ${buildPage}`
+          : `clearInterval(intervalID);
+      progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
+      () => {
+          ${containerSelector ? "progressBar.remove();" : ""}
+          ${buildPage}
+      };`
+        : ""
     }
     };`;
 }

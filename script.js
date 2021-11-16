@@ -17,17 +17,15 @@ export default function (
   ignores,
   limit,
   localLinkDetector,
-  PPBColor,
   prefetch,
   prefetchUpgradation,
   progressBar,
+  progressBarOptions,
   root,
   rootMargin,
   scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
-  secondaryProgressBar,
-  SPBColor,
   threshold,
   timeout
 ) {
@@ -83,13 +81,11 @@ export default function (
           containerSelector,
           defaultAnimation,
           localLinkDetector,
-          PPBColor,
           progressBar,
+          progressBarOptions,
           scanOnMount,
           scrollIntoView,
-          scrollIntoViewOptions,
-          secondaryProgressBar,
-          SPBColor
+          scrollIntoViewOptions
         )
       }
 
