@@ -45,7 +45,7 @@ export default function (
           };
 
           addEventListener("mouseover", callback);
-          addEventListener("touchstart", callback);
+          addEventListener("touchstart", callback, { passive: true });
         }`
         : ""
     }
