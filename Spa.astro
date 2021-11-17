@@ -112,7 +112,7 @@ const path = `public/astro-spa-${crypto
   .createHash("sha256")
   .update(code)
   .digest("hex")
-  .substr(0, 8)}.js`;
+  .slice(0, 8)}.js`;
 
 if (external) {
   fs.readFileSync(path, "utf8") === code || fs.writeFileSync(path, code);
