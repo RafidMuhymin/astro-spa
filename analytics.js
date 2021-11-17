@@ -12,13 +12,13 @@ export default function ({
     characterSet = characterSet || true;
     screenSize = screenSize || true;
     language = language || true;
-    return `const cid = await crypto.subtle.digest(
-      "SHA-256",
-      new TextEncoder().encode(
+    return `
+    AstroSpa.cid ||= new TextDecoder().decode(await crypto.subtle.digest(
+      "SHA-256", new TextEncoder().encode(
         (await (await fetch("https://api64.ipify.org")).text()) +
           navigator.userAgent
       )
-    );
+    ));
     const serialize = (obj) => {
       var str = [];
       for (var p in obj) {
@@ -30,7 +30,7 @@ export default function ({
       }
       return str.join("&");
     };
-    const track = AstroSpa.track ||= async (
+    const track = AstroSpa.track ||= (
       type,
       eventCategory,
       eventAction,
@@ -45,7 +45,7 @@ export default function ({
         ds: "web",
         ${anonymizeIP ? "aip: 1," : ""}
         tid: "${trackingID}",
-        cid,
+        cid: AstroSpa.cid,
         t: type || "pageview",
         ${colorDepth ? `sd: screen.colorDepth + "-bits",` : ""}
         dr: document.referrer || undefined,
