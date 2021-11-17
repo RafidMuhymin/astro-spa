@@ -49,9 +49,9 @@ export default function (
     const callback = async () => {
       ${
         cache
-          ? `AstroSpa.cs || caches.delete("spafy");
+          ? `AstroSpa.cs || caches.delete("astro-spa");
       AstroSpa.cs = true;
-      const cache = await caches.open("spafy");
+      const cache = await caches.open("astro-spa");
       const cachePage = async (href) => {
         return cache.put(href, await fetch(href));
       }`
