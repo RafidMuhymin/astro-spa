@@ -4,12 +4,11 @@ export default function (progressBar, progressBarOptions = {}) {
   return progressBar
     ? secondary
       ? `const bgProgressBar = document.createElement("div");
-    const progressBar = document.createElement("div");
-    
-    bgProgressBar.style =
-      "position: fixed; top: 0px; left: 0px; width: 100vw; height: ${height}; background-color: ${foreground}; z-index: -1;";
-    progressBar.style =
-      "position: fixed; top: 0px; left: 0px; width: 100vw; height: ${height}; background-color: ${background};";
+    const progressBar = bgProgressBar.cloneNode();
+
+    const style = 'position:fixed;top:0;left:0;width:100vw;height:${height};background:';
+    bgProgressBar.style = style + '${background};z-index:-1';
+    progressBar.style = style + '${foreground}';
 
     document.body.appendChild(bgProgressBar);
     document.body.appendChild(progressBar);
@@ -20,20 +19,18 @@ export default function (progressBar, progressBarOptions = {}) {
 
     animateProgressBar();
 
-    intervalID = setInterval(() => {
+    let intervalID = setInterval(() => {
       animateProgressBar();
     }, 1250);`
-      : `let pbw = 25;
-    let intervalID;
-    const progressBar = document.createElement("div");
-
+      : `const progressBar = document.createElement("div");
     progressBar.style =
-    "position: fixed; top: 0px; left: 0px; width: 25vw; transition: width 0.5s ease; height: ${height}; background-color: ${foreground};";
+      "position:fixed;top:0;left:0;width:25vw;transition:width 0.5s;height:${height};background:${foreground}";
     document.body.appendChild(progressBar);
 
     progressBar.animate({ width: ["0", "25vw"] }, 500);
 
-    intervalID = setInterval(() => {
+    let pbw = 25;
+    let intervalID = setInterval(() => {
     pbw += Math.random() * ((99.5 - pbw) / 10);
     progressBar.style.width = pbw + "vw";
     }, 500);`
