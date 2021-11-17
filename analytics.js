@@ -1,17 +1,12 @@
 export default function ({
   trackingID,
-  anonymizeIP,
-  colorDepth,
-  characterSet,
-  screenSize,
-  language,
+  anonymizeIP = true,
+  colorDepth = true,
+  characterSet = true,
+  screenSize = true,
+  language = true,
 } = {}) {
   if (trackingID) {
-    anonymizeIP = anonymizeIP || true;
-    colorDepth = colorDepth || true;
-    characterSet = characterSet || true;
-    screenSize = screenSize || true;
-    language = language || true;
     return `
     AstroSpa.cid ||= new TextDecoder().decode(await crypto.subtle.digest(
       "SHA-256", new TextEncoder().encode(
