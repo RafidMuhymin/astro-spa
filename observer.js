@@ -1,4 +1,8 @@
-export default function (delay, prefetch, root, rootMargin, threshold) {
+export default function (
+  delay,
+  { root = "", rootMargin = "", threshold = 0.25 } = {},
+  prefetch
+) {
   return prefetch
     ? `const observer = new IntersectionObserver(
         (entries) => {
@@ -18,7 +22,9 @@ export default function (delay, prefetch, root, rootMargin, threshold) {
             : rootMargin
             ? `rootMargin: "${rootMargin}",`
             : ""
-        } threshold: ${threshold} }
+        } threshold: ${
+        Array.isArray(threshold) ? `[${threshold}]` : threshold
+      } }
       );`
     : "";
 }

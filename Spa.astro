@@ -10,6 +10,12 @@ export interface scrollIntoViewOptions {
   inline?: "start" | "center" | "end" | "nearest";
 }
 
+export interface IntersectionObserverInit {
+  root?: string;
+  rootMargin?: string;
+  threshold?: number | number[];
+}
+
 export interface progressBarOptions {
   height?: string;
   secondary?: boolean;
@@ -39,18 +45,16 @@ export interface Props {
   forceRequestIdleCallback: boolean;
   highPriorityPrefetch: boolean;
   ignores: string[];
+  intersectionObserverOptions: IntersectionObserverInit;
   limit: number;
   localLinkDetector: boolean;
   prefetch: boolean;
   prefetchUpgradation: boolean;
   progressBar: boolean;
   progressBarOptions: progressBarOptions;
-  root: string;
-  rootMargin: string;
   scanOnMount: boolean;
   scrollIntoView: boolean;
   scrollIntoViewOptions: boolean | scrollIntoViewOptions;
-  threshold: number;
   timeout: number | false;
 }
 
@@ -65,18 +69,16 @@ const {
   forceRequestIdleCallback = false,
   highPriorityPrefetch = false,
   ignores = [],
+  intersectionObserverOptions,
   limit = 0,
   localLinkDetector = true,
   prefetch = true,
   prefetchUpgradation = true,
   progressBar = true,
   progressBarOptions,
-  root = "",
-  rootMargin = "",
   scanOnMount = true,
   scrollIntoView = true,
   scrollIntoViewOptions = { behavior: "smooth" },
-  threshold = 0.25,
   timeout = 2000,
 } = Astro.props as Partial<Props>;
 
@@ -89,18 +91,16 @@ const scriptContent = buildScript(
   forceRequestIdleCallback,
   highPriorityPrefetch,
   ignores,
+  intersectionObserverOptions,
   limit,
   localLinkDetector,
   prefetch,
   prefetchUpgradation,
   progressBar,
   progressBarOptions,
-  root,
-  rootMargin,
   scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
-  threshold,
   timeout
 );
 

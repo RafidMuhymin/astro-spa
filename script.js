@@ -15,18 +15,16 @@ export default function (
   forceRequestIdleCallback,
   highPriorityPrefetch,
   ignores,
+  intersectionObserverOptions,
   limit,
   localLinkDetector,
   prefetch,
   prefetchUpgradation,
   progressBar,
   progressBarOptions,
-  root,
-  rootMargin,
   scanOnMount,
   scrollIntoView,
   scrollIntoViewOptions,
-  threshold,
   timeout
 ) {
   const timeoutString =
@@ -74,7 +72,7 @@ export default function (
       }
 
       ${
-        observer(delay, prefetch, root, rootMargin, threshold) +
+        observer(delay, intersectionObserverOptions, prefetch) +
         constructPage(
           analytics,
           cache,
