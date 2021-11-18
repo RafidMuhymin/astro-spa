@@ -1,5 +1,6 @@
 export default function ({
   trackingID,
+  fingerprinting = true,
   anonymizeIP = true,
   colorDepth = true,
   characterSet = true,
@@ -10,7 +11,11 @@ export default function ({
     return `
     AstroSpa.cid ||= new TextDecoder().decode(await crypto.subtle.digest(
       "SHA-256", new TextEncoder().encode(
-        (await (await fetch("https://api64.ipify.org")).text()) + navigator.userAgent
+        ${
+          fingerprinting
+            ? `(await (await fetch("https://api64.ipify.org")).text()) + navigator.userAgent`
+            : `new Date() + Math.random()`
+        }
       )
     ));
     const track = AstroSpa.track ||= (
