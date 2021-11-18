@@ -10,21 +10,9 @@ export default function ({
     return `
     AstroSpa.cid ||= new TextDecoder().decode(await crypto.subtle.digest(
       "SHA-256", new TextEncoder().encode(
-        (await (await fetch("https://api64.ipify.org")).text()) +
-          navigator.userAgent
+        (await (await fetch("https://api64.ipify.org")).text()) + navigator.userAgent
       )
     ));
-    const serialize = (obj) => {
-      var str = [];
-      for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          if (obj[p] !== undefined) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-        }
-      }
-      return str.join("&");
-    };
     const track = AstroSpa.track ||= (
       type,
       eventCategory,
@@ -35,7 +23,7 @@ export default function ({
       exceptionFatal
     ) => {
       const url = "https://www.google-analytics.com/collect";
-      const data = serialize({
+      const data = {
         v: "1",
         ds: "web",
         ${anonymizeIP ? "aip: 1," : ""}
@@ -63,8 +51,13 @@ export default function ({
           typeof exceptionFatal !== "undefined" && !!exceptionFatal === false
             ? 0
             : undefined,
-      });
-      navigator.sendBeacon(url, data);
+      };
+      navigator.sendBeacon(
+        url,
+        new URLSearchParams(
+          Object.keys(data).forEach((key) => data[key] || delete data[key])
+        ).toString()
+      );
     };
     AstroSpa.trackEvent ||= (category, action, label, value) =>
       track("event", category, action, label, value);
