@@ -27,12 +27,13 @@ export interface progressBarOptions {
 
 export interface analytics {
   trackingID: string;
-  fingerprinting?: boolean;
   anonymizeIP?: boolean;
   colorDepth?: boolean;
   characterSet?: boolean;
   screenSize?: boolean;
   language?: boolean;
+  fingerprinting?: boolean;
+  trackingPeriod?: "year" | "month" | "day";
 }
 
 export interface Props {

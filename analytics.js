@@ -1,19 +1,32 @@
 export default function ({
   trackingID,
-  fingerprinting = true,
   anonymizeIP = true,
   colorDepth = true,
   characterSet = true,
   screenSize = true,
   language = true,
+  fingerprinting = true,
+  trackingPeriod = "year",
 } = {}) {
   if (trackingID) {
     return `
+    ${trackingPeriod !== "year" ? `const date = new Date();` : ""}
     AstroSpa.cid ||= new TextDecoder().decode(await crypto.subtle.digest(
       "SHA-256", new TextEncoder().encode(
         ${
           fingerprinting
-            ? `(await (await fetch("https://api64.ipify.org")).text()) + navigator.userAgent`
+            ? `(await (await fetch("https://api64.ipify.org")).text()) +
+                navigator.userAgent +
+                ${
+                  trackingPeriod === "year"
+                    ? `new Date().getYear()`
+                    : trackingPeriod === "month"
+                    ? `date.getYear() + date.getMonth()`
+                    : trackingPeriod === "day"
+                    ? `date.getYear() + date.getMonth() + date.getDate()`
+                    : ""
+                }
+              `
             : `new Date() + Math.random()`
         }
       )
