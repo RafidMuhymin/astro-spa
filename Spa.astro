@@ -117,7 +117,8 @@ const path = `public/astro-spa-${crypto
   .slice(0, 8)}.js`;
 
 if (external) {
-  fs.readFileSync(path, "utf8") === code || fs.writeFileSync(path, code);
+  (fs.existsSync(path) && fs.readFileSync(path, "utf8") === code) ||
+    fs.writeFileSync(path, code);
 }
 
 const Tag = "script";
