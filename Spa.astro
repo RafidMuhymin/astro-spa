@@ -120,14 +120,7 @@ if (external) {
   fs.readFileSync(path, "utf8") === code || fs.writeFileSync(path, code);
 }
 
-const keys = Object.keys(attributes || {});
-const values = Object.values(attributes || {});
-const htmlAttributes = keys
-  .map(
-    (key, i) =>
-      `${key}${typeof values[i] === "boolean" ? "" : `="${values[i]}"`}`
-  )
-  .join(" ");
+const Tag = "script";
 ---
 
-{external ? <script {...attributes} src={path.substr(6)}></script> : `<script ${htmlAttributes ? htmlAttributes : ""}>${code}</script>`}
+<Tag {...attributes} src={external && path.substring(6)}>{code}</Tag>
