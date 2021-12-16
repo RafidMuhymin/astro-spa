@@ -37,27 +37,27 @@ export interface analytics {
 }
 
 export interface Props {
-  analytics: analytics;
-  attributes: Partial<HTMLScriptElement>;
-  cache: boolean;
-  containerSelector: string;
-  defaultAnimation: boolean;
-  delay: number;
-  external: boolean;
-  forceRequestIdleCallback: boolean;
-  highPriorityPrefetch: boolean;
-  ignores: string[];
-  intersectionObserverOptions: IntersectionObserverInit;
-  limit: number;
-  localLinkDetector: boolean;
-  prefetch: boolean;
-  prefetchUpgradation: boolean;
-  progressBar: boolean;
-  progressBarOptions: progressBarOptions;
-  scanOnMount: boolean;
-  scrollIntoView: boolean;
-  scrollIntoViewOptions: boolean | scrollIntoViewOptions;
-  timeout: number | false;
+  analytics?: analytics;
+  attributes?: Partial<HTMLScriptElement>;
+  cache?: boolean;
+  containerSelector?: string;
+  defaultAnimation?: boolean;
+  delay?: number;
+  external?: boolean;
+  forceRequestIdleCallback?: boolean;
+  highPriorityPrefetch?: boolean;
+  ignores?: string[];
+  intersectionObserverOptions?: IntersectionObserverInit;
+  limit?: number;
+  localLinkDetector?: boolean;
+  prefetch?: boolean;
+  prefetchUpgradation?: boolean;
+  progressBar?: boolean;
+  progressBarOptions?: progressBarOptions;
+  scanOnMount?: boolean;
+  scrollIntoView?: boolean;
+  scrollIntoViewOptions?: boolean | scrollIntoViewOptions;
+  timeout?: number | false;
 }
 
 const {
@@ -82,7 +82,7 @@ const {
   scrollIntoView = true,
   scrollIntoViewOptions = { behavior: "smooth" },
   timeout = 2000,
-} = Astro.props as Partial<Props>;
+} = Astro.props as Props;
 
 const scriptContent = buildScript(
   analytics,
