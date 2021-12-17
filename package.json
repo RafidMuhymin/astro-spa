@@ -11,8 +11,5 @@
   ],
   "scripts": {
     "test": "echo \"No test specified\""
-  },
-  "dependencies": {
-    "terser": "^5.10.0"
   }
 }
