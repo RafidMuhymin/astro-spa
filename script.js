@@ -44,6 +44,11 @@ export default function (
         : ""
     }
 
+    document.documentElement.insertAdjacentHTML(
+      "beforeend",
+      '<div role="region" style="display: none;" aria-live="polite" aria-atomic="true" id="astro-spa-live-region"></div>'
+    );
+
     const callback = async () => {
       ${
         cache

@@ -90,5 +90,7 @@ export default function (
       };`
         : ""
     }
+
+    document.getElementById("astro-spa-live-region").textContent = document.title;
     };`;
 }
