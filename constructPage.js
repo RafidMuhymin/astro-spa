@@ -88,7 +88,7 @@ export default function (
           ${containerSelector ? "progressBar.remove();" : ""}
           ${buildPage}
       };`
-        : ""
+        : buildPage
     }
 
     document.getElementById("astro-spa-live-region").textContent = document.title;
