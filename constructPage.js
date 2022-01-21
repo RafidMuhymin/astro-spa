@@ -13,7 +13,7 @@ export default function (
   scrollIntoView,
   scrollIntoViewOptions
 ) {
-  const buildPage = buildPage(
+  const builtPage = buildPage(
     containerSelector,
     scrollIntoView,
     scrollIntoViewOptions,
@@ -45,14 +45,14 @@ export default function (
         ? progressBarOptions?.secondary
           ? `clearInterval(intervalID);
       ${containerSelector ? "progressBar.remove();bgProgressBar.remove();" : ""}
-      ${buildPage}`
+      ${builtPage}`
           : `clearInterval(intervalID);
       progressBar.animate({ width: [pbw + "vw", "100vw"] }, 100).onfinish =
       () => {
           ${containerSelector ? "progressBar.remove();" : ""}
-          ${buildPage}
+          ${builtPage}
       };`
-        : buildPage
+        : builtPage
     }
 
     document.getElementById("astro-spa-live-region").textContent = document.title;
