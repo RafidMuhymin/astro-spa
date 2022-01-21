@@ -19,7 +19,12 @@ export default function (
         }
         document.head.replaceWith(doc.head);
         ${localLinkDetector ? "styleLocalLink();" : ""}`
-      : "document.documentElement.replaceWith(doc.documentElement);"
+      : `document.documentElement.replaceWith(doc.documentElement);` +
+        (scrollIntoView
+          ? `document.documentElement.scrollIntoView(${JSON.stringify(
+              scrollIntoViewOptions
+            )});`
+          : "")
   }
       [
         ...document.${
