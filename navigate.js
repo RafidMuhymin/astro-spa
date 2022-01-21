@@ -1,8 +1,12 @@
-export default function () {
-  return `AstroSpa.navigate = (href, options) => {
-    if (location.href !== href && location.pathname !== href) {
-      history[options?.reload ? "replaceState" : "pushState"](options?.state || {}, document.title, href);
-      constructPage();
-    }
-  };`;
-}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Astro-SPA</title>
+  </head>
+  <body>
+    <h1>Astro-SPA</h1>
+
+    <Spa />
+  </body>
+</html>;

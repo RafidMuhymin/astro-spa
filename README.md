@@ -28,10 +28,19 @@ Then import the component like this:
 ```astro
 ---
 import { Spa } from "astro-spa";
-// or import Spa from 'astro-spa/Spa.astro'
 ---
 
-<Spa />
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Astro-SPA</title>
+  </head>
+  <body>
+    <h1>Astro-SPA</h1>
+    <Spa />
+  </body>
+</html>
 ```
 
 And that's it, you're now ready to go!
