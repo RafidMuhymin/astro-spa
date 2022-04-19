@@ -124,4 +124,4 @@ if (external) {
 const Tag = "script";
 ---
 
-<Tag {...attributes} src={external && path.substring(6)}>{code}</Tag>
+<Tag {...attributes} src={external && path.substring(6)} set:html={code} />
