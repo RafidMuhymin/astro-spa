@@ -10,11 +10,11 @@ export default function (
   return `${
     containerSelector
       ? `const newContent = doc.querySelector("${containerSelector}");
+        const container = document.querySelector("${containerSelector}");
+        container.replaceWith(newContent);
         ${
           scrollIntoView
-            ? `const container = document.querySelector("${containerSelector}");
-        container.replaceWith(newContent);
-        newContent.scrollIntoView(${JSON.stringify(scrollIntoViewOptions)});`
+            ? `newContent.scrollIntoView(${JSON.stringify(scrollIntoViewOptions)});`
             : ""
         }
         document.head.replaceWith(doc.head);
