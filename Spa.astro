@@ -1,8 +1,6 @@
 ---
-import fs from "node:fs";
-import crypto from "node:crypto";
-import { minify } from "./terser.js";
 import buildScript from "./script.js";
+import { minify } from "./terser.js";
 
 export interface scrollIntoViewOptions {
   behavior?: "smooth" | "auto";
@@ -108,17 +106,35 @@ const scriptContent = buildScript(
 
 const { code } = await minify(scriptContent);
 
-fs.existsSync("public") || fs.mkdirSync("public");
-
-const path = `public/astro-spa-${crypto
-  .createHash("sha256")
-  .update(code)
-  .digest("hex")
-  .slice(0, 8)}.js`;
+//path will not be used unless external is true
+let path = "";
 
 if (external) {
-  (fs.existsSync(path) && fs.readFileSync(path, "utf8") === code) ||
-    fs.writeFileSync(path, code);
+  import("node:crypto")
+    .then((crypto) => {
+      path = `public/astro-spa-${crypto
+        .createHash("sha256")
+        .update(code)
+        .digest("hex")
+        .slice(0, 8)}.js`;
+    })
+    .catch((err) => {
+      console.error(
+        "Node API Crypto is not available. The script will now inline. This is equal to the option 'external: false'."
+      );
+    });
+
+  import("node:fs")
+    .then((fs) => {
+      fs.existsSync("public") || fs.mkdirSync("public");
+      (fs.existsSync(path) && fs.readFileSync(path, "utf8") === code) ||
+        fs.writeFileSync(path, code);
+    })
+    .catch((err) => {
+      console.error(
+        "Node API fs is not available. The script will now inline. This is equal to the option 'external: false'."
+      );
+    });
 }
 
 const Tag = "script";
