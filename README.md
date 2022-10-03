@@ -315,6 +315,8 @@ Default: `false`
 
 Whether the code should be included in an external JavaScript file or be inlined. If enabled, the hash of the code will be appended to the filename.
 
+> **Note:** To create an external script the Node Api is used. In Deno/Cloudflare/etc. Environments this will always be `false` and can not be changed
+
 ### forceRequestIdleCallback
 
 Type: `boolean`
